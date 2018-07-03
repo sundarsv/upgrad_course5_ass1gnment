@@ -31,4 +31,10 @@ public interface UserRepository extends CrudRepository<Users, Integer>{
     @Query(nativeQuery = true,value="INSERT INTO USERS (userName,password,email,role) VALUES (?1,?2,?3,?4)")
     void addUserCredentials(String uname,String password,String email, String role );
 
+    @Query(nativeQuery = true,value="SELECT password FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
+    String findUserPassword(String userName);
+
+    @Query(nativeQuery = true,value="SELECT role FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
+    String findUserRole(String userName);
+
 }

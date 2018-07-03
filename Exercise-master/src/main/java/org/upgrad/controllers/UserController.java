@@ -4,8 +4,12 @@ import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
+import org.upgrad.services.UserService;
 import org.upgrad.services.UserServiceImp ;
 
 import java.nio.charset.StandardCharsets;
@@ -20,7 +24,7 @@ Description - This class contains rest api corresponding to user related methods
 public class UserController {
 
     @Autowired
-    private UserServiceImp userService ;
+    private UserService userService ;
 
     /*
         This returns true if username already exists.
@@ -85,9 +89,34 @@ public class UserController {
               message = userName + " successfully registered" ;
               return new ResponseEntity<>( message , HttpStatus.OK) ;
        }
-
     }
 
+
+    @PostMapping("/api/user/login")
+    public ResponseEntity loginWithBadCredentials(@RequestParam String userName, @RequestParam String password)
+    {
+        String message =  null ;
+        String passwordHash = hashPassword(password) ;
+
+       String passwordU =  String.valueOf(userService.findUserPassword(userName));
+       if(! (passwordU.equalsIgnoreCase(passwordHash)))
+       {
+           message = "Invalid Credentials"  ;
+       }
+       else {
+          String role =  String.valueOf(userService.findUserRole(userName));
+
+          if (role.equalsIgnoreCase("admin"))
+          {
+              // TODO :  Session Object Login
+              message = "You have logged in as admin!"  ;
+          } else if (role.equalsIgnoreCase("user"))
+          {
+              message = "You have logged in successfully!"  ;
+          }
+       }
+       return new ResponseEntity<>( message , HttpStatus.OK) ;
+    }
 
     /* This is a helper function that encrypts a plain text password using the
      * SHA-256 encryption

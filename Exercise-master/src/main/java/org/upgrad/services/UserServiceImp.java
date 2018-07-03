@@ -48,5 +48,18 @@ public class UserServiceImp implements UserService {
         return  success ;
     }
 
+    @Override
+    public String findUserPassword(String userName)
+    {
+        return String.valueOf(userRepository.findUserPassword(userName)) ;
+    }
+
+    @Override
+    public String findUserRole(String userName)
+    {
+        return String.valueOf(userRepository.findUserRole(userName)) ;
+    }
+
+
 
 }
