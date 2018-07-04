@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.services.UserService;
-import org.upgrad.services.UserServiceImp ;
+import org.upgrad.services.UserServiceImp;
+import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 
@@ -23,18 +24,18 @@ import java.text.SimpleDateFormat;
 public class UserController {
 
     @Autowired
-    private UserService userService ;
+    private UserService userService;
 
     /*
-    * This returns true if username already exists.
-    * Otherwise it returns false.
-    */
-    public Boolean registerUserWithExistingUsername(String userName) throws Exception{
+     * This returns true if username already exists.
+     * Otherwise it returns false.
+     */
+    public Boolean registerUserWithExistingUsername(String userName) throws Exception {
         String userPresent = String.valueOf(userService.findUserByUsername(userName));
-        if ( ! (userPresent.equalsIgnoreCase("null") )) {
-            return true ;
-        } else  {
-            return false ;
+        if (!(userPresent.equalsIgnoreCase("null"))) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -42,20 +43,20 @@ public class UserController {
      *  This returns true if email already exists.
      *  Otherwise it returns false.
      */
-    public Boolean registerUserWithExistingEmail(String email) throws Exception{
+    public Boolean registerUserWithExistingEmail(String email) throws Exception {
         String userPresent = String.valueOf(userService.findUserByEmail(email));
-        if ( ! (userPresent.equalsIgnoreCase("null") )) {
-            return true ;
-        }else{
-		return false ;
-	}
+        if (!(userPresent.equalsIgnoreCase("null"))) {
+            return true;
+        } else {
+            return false;
+        }
     }
-     /* 
-      *  It checks signup the user along with it's details if user is not already present.
-      *  This method gives relevant messages in case username or email is already registered
-      */
+    /*
+     *  It checks signup the user along with it's details if user is not already present.
+     *  This method gives relevant messages in case username or email is already registered
+     */
     @PostMapping("/api/user/signup/")
-    public ResponseEntity registerUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password , @RequestParam String firstName, @RequestParam String lastName, @RequestParam String aboutMe, @RequestParam String contactNumber, @RequestParam String dob, @RequestParam String country) throws Exception{
+    public ResponseEntity registerUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String aboutMe, @RequestParam String contactNumber, @RequestParam String dob, @RequestParam String country) throws Exception {
 
         // Setting url data into user model class.
         User user = new User();
@@ -69,60 +70,52 @@ public class UserController {
         user.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
         user.setAboutMe(aboutMe);
 
-        String message = null ;
-
-       if ( registerUserWithExistingUsername(user.getUserName()) )
-       {
-            message = "Try any other Username, this Username has already been taken." ;
-            return new ResponseEntity<>( message , HttpStatus.FORBIDDEN) ;
-       }  else if  ( registerUserWithExistingEmail(user.getEmail())) {
-           message = "This user has already been registered, try with any other emailId." ;
-           return new ResponseEntity<>( message , HttpStatus.FORBIDDEN) ;
-       }  else {
-
-             //TODO : Make Parameters optional
-              userService.registerUserDetails(user);
-              message = userName + " successfully registered" ;
-              return new ResponseEntity<>( message , HttpStatus.OK) ;
-       }
+        String message = null;
+        if (registerUserWithExistingUsername(user.getUserName())) {
+            message = "Try any other Username, this Username has already been taken.";
+            return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
+        } else if (registerUserWithExistingEmail(user.getEmail())) {
+            message = "This user has already been registered, try with any other emailId.";
+            return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
+        } else {
+            //TODO : Make Parameters optional
+            userService.registerUserDetails(user);
+            message = userName + " successfully registered";
+            return new ResponseEntity < > (message, HttpStatus.OK);
+        }
     }
 
-
     @PostMapping("/api/user/login")
-    public ResponseEntity loginWithBadCredentials(@RequestParam String userName, @RequestParam String password)
-    {
-       String message =  null ;
-       String passwordHash = hashPassword(password) ;
-       String passwordU =  String.valueOf(userService.findUserPassword(userName));
-       if(! (passwordU.equalsIgnoreCase(passwordHash))){
-           message = "Invalid Credentials"  ;
-	   return new ResponseEntity<>( message , HttpStatus.UNAUTHORIZED) ;
-
-       }
-       else {
-          String role =  String.valueOf(userService.findUserRole(userName));
-
-          if (role.equalsIgnoreCase("admin")){
-              // TODO :  Session Object Login
-              message = "You have logged in as admin!"  ;
-	      return new ResponseEntity<>( message , HttpStatus.OK) ;
-          } else if (role.equalsIgnoreCase("user")){
-              message = "You have logged in successfully!"  ;
-	      return new ResponseEntity<>( message , HttpStatus.OK) ;
-          }
-       }
+    public ResponseEntity sigin(@RequestParam String userName, @RequestParam String password, HttpSession session) {
+        String message = null;
+        String passwordHash = hashPassword(password);
+        String passwordU = String.valueOf(userService.findUserPassword(userName));
+        if (!(passwordU.equalsIgnoreCase(passwordHash))) {
+            message = "Invalid Credentials";
+            return new ResponseEntity < > (message, HttpStatus.UNAUTHORIZED);
+        } else {
+            String role = String.valueOf(userService.findUserRole(userName));
+            if (role.equalsIgnoreCase("admin")) {
+                message = "You have logged in as admin!";
+            } else if (role.equalsIgnoreCase("user")) {
+                message = "You have logged in successfully!";
+            }
+            User user = new User(userName);
+            session.setAttribute("currUser", user);
+            return new ResponseEntity < > (message, HttpStatus.OK);
+        }
     }
 
     /* This is a helper function that encrypts a plain text password using the
      * SHA-256 encryption
      *
-             * @param password the plain text String that we want to encrypt
+     * @param password the plain text String that we want to encrypt
      *
-             * @return the SAH-256 encrypted version of the password
+     * @return the SAH-256 encrypted version of the password
      */
     private String hashPassword(String password) {
-        String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString() ;
+        String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
         return passwordHash;
     }
-
 }
+

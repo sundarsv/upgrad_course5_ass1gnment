@@ -60,6 +60,4 @@ public class UserServiceImp implements UserService {
         return String.valueOf(userRepository.findUserRole(userName)) ;
     }
 
-
-
 }

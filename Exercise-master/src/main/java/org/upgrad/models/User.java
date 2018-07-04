@@ -7,16 +7,22 @@ import java.util.Date;
     Descrition -Model class to contain user and userProfile Data
  */
 public class User {
-    private int id ;
-    private String userName ;
-    private String email ;
-    private String password ;
-    private Date dob ;
-    private String  firstName ;
-    private String lastName ;
-    private String country ;
-    private String aboutMe ;
-    private String contactNumber ;
+    private int id;
+    private String userName;
+    private String email;
+    private String password;
+    private Date dob;
+    private String firstName;
+    private String lastName;
+    private String country;
+    private String aboutMe;
+    private String contactNumber;
+
+    public User() {}
+
+    public User(String userName) {
+        this.userName = userName;
+    }
 
     /*
      Getters and setters
@@ -101,5 +107,3 @@ public class User {
         this.contactNumber = contactNumber;
     }
 }
-
-
