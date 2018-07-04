@@ -7,7 +7,6 @@ import java.util.Date;
     Descrition -Model class to contain user and userProfile Data
  */
 public class User {
-
     private int id ;
     private String userName ;
     private String email ;
@@ -18,7 +17,6 @@ public class User {
     private String country ;
     private String aboutMe ;
     private String contactNumber ;
-
 
     /*
      Getters and setters
@@ -102,8 +100,6 @@ public class User {
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
-
-
 }
 
 
