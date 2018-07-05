@@ -56,7 +56,7 @@ public class UserController {
      *  This method gives relevant messages in case username or email is already registered
      */
     @PostMapping("/api/user/signup/")
-    public ResponseEntity registerUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String aboutMe, @RequestParam String contactNumber, @RequestParam String dob, @RequestParam String country) throws Exception {
+    public ResponseEntity registerUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam(value = "lastName",required = false) String lastName, @RequestParam(value = "aboutMe",required = false) String aboutMe, @RequestParam(value = "contactNumber",required = false) String contactNumber, @RequestParam String dob, @RequestParam String country) throws Exception {
 
         // Setting url data into user model class.
         User user = new User();
