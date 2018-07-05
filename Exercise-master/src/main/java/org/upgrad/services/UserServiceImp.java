@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.User;
+import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
 import org.upgrad.repositories.UserRepository;
 
@@ -58,6 +59,11 @@ public class UserServiceImp implements UserService {
     public String findUserRole(String userName)
     {
         return String.valueOf(userRepository.findUserRole(userName)) ;
+    }
+
+    @Override
+    public User_Profile retrieveUserProfile(int userId) {
+        return userProfileRepository.getUserProfileById(userId);
     }
 
 }

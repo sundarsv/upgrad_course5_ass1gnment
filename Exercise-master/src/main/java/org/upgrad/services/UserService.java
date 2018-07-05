@@ -2,6 +2,8 @@ package org.upgrad.services;
 
 import org.springframework.stereotype.Service;
 import org.upgrad.models.User;
+import org.upgrad.models.User_Profile;
+import sun.plugin.util.UserProfile;
 
 /*
     Author - Sugandha
@@ -17,4 +19,5 @@ public interface UserService {
     public Boolean registerUserDetails(User user);
     public String findUserPassword(String userName);
     public String findUserRole(String userName);
+    public User_Profile retrieveUserProfile(int userId);
 }
