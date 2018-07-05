@@ -79,10 +79,9 @@ public class UserController {
             message = "This user has already been registered, try with any other emailId.";
             return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
         } else {
-            //TODO : Make Parameters optional
             userService.registerUserDetails(user);
             message = userName + " successfully registered";
-            return new ResponseEntity < > (message, HttpStatus.OK);
+            return new ResponseEntity <> (message, HttpStatus.OK);
         }
     }
 
