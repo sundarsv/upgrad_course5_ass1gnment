@@ -9,9 +9,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.upgrad.models.User;
+import org.upgrad.models.Users;
 import org.upgrad.services.UserService;
 
 import static org.hamcrest.Matchers.containsString;
@@ -25,11 +27,11 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
-//
+
        @MockBean
        private UserService userService;
-//
-//    protected MockHttpSession session;
+
+       protected MockHttpSession session;
 //
 //    @MockBean
 //    private UserProfileService userProfileService;
@@ -67,9 +69,9 @@ public class UserControllerTest {
 
     @Test
     public void registerUserWithExistingUsername() throws Exception{
-        User user= new User();
-       user.setId(1);
-       user.setUserName("upgrad");
+        Users user= new Users();
+        user.setId(1);
+        user.setUserName("upgrad");
         String firstName = "software";
         String lastName= "development";
         String userName = "upgrad";
@@ -101,7 +103,7 @@ public class UserControllerTest {
         user.setId(1);
         user.setUserName("upgrad");
         String firstName = "software";
-       String lastName= "development";
+        String lastName= "development";
         String userName = "upgrad";
         String email = "upgrad@upgrad.com";
         String password = "12345";
@@ -125,46 +127,46 @@ public class UserControllerTest {
                 .andExpect(content().string(containsString("This user has already been registered, try with any other emailId.")));
    }
 
-//    @Test
-//    public void loginAsAdmin() throws Exception{
-//        String userName = "upgrad";
-//        String password = "12345";
-//        String passwordHash = Hashing.sha256()
-//                .hashString(password, Charsets.US_ASCII)
-//                .toString();
-//        String role = "admin";
-//
-//        Mockito.when(userService.findUserPassword(userName)).thenReturn(passwordHash);
-//        Mockito.when(userService.findUserRole(userName)).thenReturn(role);
-//
-//        String url = "/api/user/login";
-//        mvc.perform(post(url)
-//                .param("userName", userName)
-//                .param("password", password))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(content().string(containsString("You have logged in as admin!")));
-//    }
-//
-//    @Test
-//    public void loginAsUser() throws Exception{
-//
-//        String userName = "upgrad";
-//        String password = "12345";
-//        String passwordHash = Hashing.sha256()
-//                .hashString(password, Charsets.US_ASCII)
-//                .toString();
-//        String role = "user";
-//
-//        Mockito.when(userService.findUserPassword(userName)).thenReturn(passwordHash);
-//        Mockito.when(userService.findUserRole(userName)).thenReturn(role);
-//
-//        String url = "/api/user/login";
-//        mvc.perform(post(url)
-//                .param("userName", userName)
-//                .param("password", password))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(content().string(containsString("You have logged in successfully!")));
-//    }
+    @Test
+    public void loginAsAdmin() throws Exception{
+        String userName = "upgrad";
+        String password = "12345";
+        String passwordHash = Hashing.sha256()
+                .hashString(password, Charsets.US_ASCII)
+                .toString();
+        String role = "admin";
+
+        Mockito.when(userService.findUserPassword(userName)).thenReturn(passwordHash);
+        Mockito.when(userService.findUserRole(userName)).thenReturn(role);
+
+        String url = "/api/user/login";
+        mvc.perform(post(url)
+                .param("userName", userName)
+                .param("password", password))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(containsString("You have logged in as admin!")));
+    }
+
+    @Test
+    public void loginAsUser() throws Exception{
+
+        String userName = "upgrad";
+        String password = "12345";
+        String passwordHash = Hashing.sha256()
+                .hashString(password, Charsets.US_ASCII)
+                .toString();
+        String role = "user";
+
+        Mockito.when(userService.findUserPassword(userName)).thenReturn(passwordHash);
+        Mockito.when(userService.findUserRole(userName)).thenReturn(role);
+
+        String url = "/api/user/login";
+        mvc.perform(post(url)
+                .param("userName", userName)
+                .param("password", password))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(containsString("You have logged in successfully!")));
+    }
 
     @Test
     public void loginWithBadCredentials() throws Exception{
@@ -188,29 +190,29 @@ public class UserControllerTest {
                .andExpect(content().string(containsString("Invalid Credentials")));
     }
 
-//    @Test
-//    public void logoutUser() throws Exception{
-//        User user = new User();
-//        user.setUserName("upgrad");
-//        user.setRole("user");
-//        session = new MockHttpSession();
-//        session.setAttribute("currUser", user);
-//        String url = "/api/user/logout";
-//        mvc.perform(post(url).session(session))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(content().string(containsString("You have logged out successfully")));
-//    }
-//
-//    @Test
-//    public void logoutUserWithoutLogin() throws Exception{
-//        session = new MockHttpSession();
-//        session.setAttribute("currUser", null);
-//        String url = "/api/user/logout";
-//        mvc.perform(post(url).session(session))
-//                .andExpect(status().is4xxClientError())
-//                .andExpect(content().string(containsString("You are currently not logged in")));
-//    }
-//
+    @Test
+    public void logoutUser() throws Exception{
+        Users user = new Users();
+        user.setUserName("upgrad");
+        user.setRole("user");
+        session = new MockHttpSession();
+        session.setAttribute("currUser", user);
+        String url = "/api/user/logout";
+        mvc.perform(post(url).session(session))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(containsString("You have logged out successfully")));
+    }
+
+    @Test
+    public void logoutUserWithoutLogin() throws Exception{
+        session = new MockHttpSession();
+        session.setAttribute("currUser", null);
+        String url = "/api/user/logout";
+        mvc.perform(post(url).session(session))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(containsString("You are currently not logged in")));
+    }
+
 //    @Test
 //    public void getNewNotificationsWithoutLogin() throws Exception{
 //        session = new MockHttpSession();
