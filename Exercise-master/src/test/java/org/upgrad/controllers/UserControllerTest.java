@@ -9,9 +9,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.upgrad.models.User;
 import org.upgrad.services.UserService;
 
@@ -46,6 +48,9 @@ public class UserControllerTest {
         String userName = "upgrad";
         String email = "upgrad@upgrad.com";
         String password = "12345";
+        String passwordHash = Hashing.sha256()
+                .hashString(password, Charsets.US_ASCII)
+                .toString();
         String country = "India";
         String aboutMe = "hello world";
         String dob = "2001-01-01";
@@ -57,7 +62,7 @@ public class UserControllerTest {
                 .param("lastName", lastName)
                 .param("userName", userName)
                 .param("email", email)
-                .param("password", password)
+                .param("password", passwordHash)
                 .param("country", country)
                 .param("aboutMe", aboutMe)
                 .param("dob", dob)

@@ -28,31 +28,6 @@ public class UserController {
     private UserService userService;
 
     /*
-     * This returns true if username already exists.
-     * Otherwise it returns false.
-     */
-    public Boolean registerUserWithExistingUsername(String userName) throws Exception {
-        String userPresent = String.valueOf(userService.findUserByUsername(userName));
-        if (!(userPresent.equalsIgnoreCase("null"))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*
-     *  This returns true if email already exists.
-     *  Otherwise it returns false.
-     */
-    public Boolean registerUserWithExistingEmail(String email) throws Exception {
-        String userPresent = String.valueOf(userService.findUserByEmail(email));
-        if (!(userPresent.equalsIgnoreCase("null"))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    /*
      *  It checks signup the user along with its details if user is not already present.
      *  This method gives relevant messages in case username or email is already registered
      */
@@ -74,11 +49,15 @@ public class UserController {
         user.setUser_profile(user_profile);
 
         String message = null;
-        if (registerUserWithExistingUsername(user.getUserName())) {
+
+        String userPresent = String.valueOf(userService.findUserByUsername(userName));
+        String userEmail = String.valueOf(userService.findUserByEmail(email));
+
+        if (!(userPresent.equalsIgnoreCase("null"))) {
             message = "Try any other Username, this Username has already been taken.";
             return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
-        } else if (registerUserWithExistingEmail(user.getEmail())) {
-            message = "This user has already been registered, try with any other emailId.";
+        } else if (!(userEmail.equalsIgnoreCase("null"))) {
+        message = "This user has already been registered, try with any other emailId.";
             return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
         } else {
             userService.registerUserDetails(user);
