@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.upgrad.models.User;
-import org.upgrad.models.Users;
 import org.upgrad.services.UserService;
 
 import static org.hamcrest.Matchers.containsString;
@@ -69,7 +68,7 @@ public class UserControllerTest {
 
     @Test
     public void registerUserWithExistingUsername() throws Exception{
-        Users user= new Users();
+        User user= new User();
         user.setId(1);
         user.setUserName("upgrad");
         String firstName = "software";
@@ -192,7 +191,7 @@ public class UserControllerTest {
 
     @Test
     public void logoutUser() throws Exception{
-        Users user = new Users();
+        User user = new User();
         user.setUserName("upgrad");
         user.setRole("user");
         session = new MockHttpSession();

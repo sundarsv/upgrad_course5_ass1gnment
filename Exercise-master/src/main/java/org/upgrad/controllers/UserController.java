@@ -62,14 +62,16 @@ public class UserController {
         // Setting url data into user model class.
         User user = new User();
         user.setPassword(hashPassword(password));
-        user.setLastName(lastName);
-        user.setFirstName(firstName);
         user.setEmail(email);
-        user.setCountry(country);
-        user.setContactNumber(contactNumber);
         user.setUserName(userName);
-        user.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
-        user.setAboutMe(aboutMe);
+        User_Profile user_profile = new User_Profile();
+        user_profile.setLastName(lastName);
+        user_profile.setFirstName(firstName);
+        user_profile.setCountry(country);
+        user_profile.setContactNumber(contactNumber);
+        user_profile.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
+        user_profile.setAboutMe(aboutMe);
+        user.setUser_profile(user_profile);
 
         String message = null;
         if (registerUserWithExistingUsername(user.getUserName())) {
@@ -99,7 +101,7 @@ public class UserController {
         String passwordU = String.valueOf(userService.findUserPassword(userName));
         if (!(passwordU.equalsIgnoreCase(passwordHash))) {
             message = "Invalid Credentials";
-            return new ResponseEntity < > (message, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity <> (message, HttpStatus.UNAUTHORIZED);
         } else {
             String role = String.valueOf(userService.findUserRole(userName));
             if (role.equalsIgnoreCase("admin")) {

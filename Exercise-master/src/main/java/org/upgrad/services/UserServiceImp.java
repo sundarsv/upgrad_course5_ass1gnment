@@ -42,9 +42,9 @@ public class UserServiceImp implements UserService {
         Boolean success = false ;
 
         userRepository.addUserCredentials(user.getUserName(), user.getPassword(), user.getEmail(), "user") ;
-        int user_id =  Integer.valueOf(userRepository.findUserId(user.getUserName())) ;
+       // int user_id =  Integer.valueOf(userRepository.findUserId(user.getUserName())) ;
 
-        userProfileRepository.addUserProfileCredentials(user_id, user.getFirstName(), user.getLastName(), user.getAboutMe(), user.getDob(), user.getContactNumber(),user.getCountry());
+      //  userProfileRepository.addUserProfileCredentials(user_id, user.getFirstName(), user.getLastName(), user.getAboutMe(), user.getDob(), user.getContactNumber(),user.getCountry());
         success = true ;
         return  success ;
     }
