@@ -21,5 +21,5 @@ public interface UserService {
     public String findUserRole(String userName);
     public User_Profile retrieveUserProfile(int userId);
     public void deleteUserById(int id);
-    public List<User> getAll();
+    public List<String> getAllUsers();
 }
