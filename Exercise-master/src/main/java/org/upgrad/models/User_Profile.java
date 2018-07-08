@@ -1,5 +1,6 @@
 package org.upgrad.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
@@ -15,11 +16,15 @@ public class User_Profile {
     @Id
     private int id ;
     private int user_id ;
-    private String firstName ;
+    @Column(name = "firstname")
+    String firstName ;
+    @Column(name = "lastname")
     private String lastName  ;
     private String country ;
+    @Column(name = "aboutme")
     private String aboutMe ;
     private Date dob ;  //  "yyyy-mm-dd"
+    @Column(name = "contactnumber")
     private String contactNumber ;
 
 
