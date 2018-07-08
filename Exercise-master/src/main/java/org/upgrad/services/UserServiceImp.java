@@ -9,6 +9,8 @@ import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
 import org.upgrad.repositories.UserRepository;
 
+import java.sql.ResultSet;
+
 /*
     Author - Sugandha
     Date - 2 July, 2018
@@ -37,14 +39,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Boolean registerUserDetails(User user)
-    {
+    public Boolean registerUserDetails(User user , User_Profile uf ) {
         Boolean success = false ;
 
         userRepository.addUserCredentials(user.getUserName(), user.getPassword(), user.getEmail(), "user") ;
-       // int user_id =  Integer.valueOf(userRepository.findUserId(user.getUserName())) ;
-
-      //  userProfileRepository.addUserProfileCredentials(user_id, user.getFirstName(), user.getLastName(), user.getAboutMe(), user.getDob(), user.getContactNumber(),user.getCountry());
+        int user_id =  Integer.valueOf(userRepository.findUserId(user.getUserName())) ;
+        userProfileRepository.addUserProfileCredentials(user_id,  uf.getFirstName(), uf.getLastName(), uf.getAboutMe(), uf.getDob() , uf.getContactNumber() , uf.getCountry() );
         success = true ;
         return  success ;
     }

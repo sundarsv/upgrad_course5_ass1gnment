@@ -64,7 +64,7 @@ public class UserController {
         message = "This user has already been registered, try with any other emailId.";
             return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
         } else {
-            userService.registerUserDetails(user);
+            userService.registerUserDetails(user, user_profile);
             message = userName + " successfully registered";
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
@@ -78,7 +78,8 @@ public class UserController {
      * @return Response entity to determine if login is successful or not
      */
     @PostMapping("/api/user/login")
-    public ResponseEntity sigin(@RequestParam String userName, @RequestParam String password, HttpSession session) {
+    public ResponseEntity sigin(@RequestParam String userName, @RequestParam String password, HttpSession session) throws Exception
+    {
         String message = null;
         String passwordHash = hashPassword(password);
         String passwordU = String.valueOf(userService.findUserPassword(userName));

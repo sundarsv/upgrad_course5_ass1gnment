@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.upgrad.models.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.sql.ResultSet;
+
 
 /*
     Author - Sugandha
@@ -39,6 +41,5 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 
     @Query(nativeQuery = true,value="SELECT id FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     int findId(String userName);
-
 
 }
