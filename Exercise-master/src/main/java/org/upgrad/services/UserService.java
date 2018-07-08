@@ -3,7 +3,7 @@ package org.upgrad.services;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
-import sun.plugin.util.UserProfile;
+import java.util.List;
 
 /*
     Author - Sugandha
@@ -20,4 +20,6 @@ public interface UserService {
     public String findUserPassword(String userName);
     public String findUserRole(String userName);
     public User_Profile retrieveUserProfile(int userId);
+    public void deleteUserById(int id);
+    public List<User> getAll();
 }
