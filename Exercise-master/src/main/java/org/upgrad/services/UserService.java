@@ -20,4 +20,5 @@ public interface UserService {
     public String findUserPassword(String userName);
     public String findUserRole(String userName);
     public User_Profile retrieveUserProfile(int userId);
+    public int findId(String userName);
 }
