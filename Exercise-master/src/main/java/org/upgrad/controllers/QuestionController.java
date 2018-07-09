@@ -12,6 +12,7 @@ import org.upgrad.services.QuestionService;
 import org.upgrad.services.UserService;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /*
  * Author - Apoorva
@@ -26,17 +27,15 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/api/question")
-    public ResponseEntity<?> createQuestion(@RequestParam("content") String content, HttpSession session) {
+    public ResponseEntity<?> createQuestion(@RequestParam("categoryId") Set<Integer> categoryId, @RequestParam("content") String content, HttpSession session) {
 
         if (session.getAttribute("currUser")==null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!",HttpStatus.UNAUTHORIZED);
         }
-
         else {
             User user = (User) session.getAttribute("currUser");
             Long id = System.currentTimeMillis() % 1000;
-            // To-do category
-            questionService.addQuestion(id.intValue(), content, user.getUser_profile().getUser_id());
+            questionService.addQuestion(id.intValue(), content, user.getUser_profile().getUser_id(),categoryId);
             return new ResponseEntity<>("Question added successfully.", HttpStatus.OK);
         }
     }
@@ -50,10 +49,8 @@ public class QuestionController {
 
         else {
             User user = (User) session.getAttribute("currUser");
-            Long id = System.currentTimeMillis() % 1000;
-            // To-do category
-            questionService.getQuestionsByCategory(categoryId);
-            return new ResponseEntity<>("Question added successfully.", HttpStatus.OK);
+            int question_id = questionService.getQuestionId(categoryId);
+            return new ResponseEntity<>(questionService.getQuestionsByCategory(question_id), HttpStatus.OK);
         }
     }
 
@@ -66,10 +63,7 @@ public class QuestionController {
 
         else {
             User user = (User) session.getAttribute("currUser");
-            Long id = System.currentTimeMillis() % 1000;
-            // To-do category
-            questionService.getQuestionsByUser(id.intValue());
-            return new ResponseEntity<>("Question added successfully.", HttpStatus.OK);
+            return new ResponseEntity<>(questionService.getQuestionsByUser(user.getUser_profile().getUser_id()), HttpStatus.OK);
         }
     }
 

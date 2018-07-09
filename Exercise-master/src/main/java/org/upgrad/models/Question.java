@@ -64,6 +64,15 @@ public class Question {
 //    @JsonIgnore
 //    private User user;
 
-    public Question() { }
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    private Category category;
 
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
 }
