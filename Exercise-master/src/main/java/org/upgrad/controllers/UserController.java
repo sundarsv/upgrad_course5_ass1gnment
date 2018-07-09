@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
+import org.upgrad.services.NotificationService;
 import org.upgrad.services.UserService;
 import org.upgrad.services.UserServiceImp;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     /*
      *  It checks signup the user along with its details if user is not already present.
@@ -60,7 +64,7 @@ public class UserController {
         message = "This user has already been registered, try with any other emailId.";
             return new ResponseEntity < > (message, HttpStatus.FORBIDDEN);
         } else {
-            userService.registerUserDetails(user);
+            userService.registerUserDetails(user, user_profile);
             message = userName + " successfully registered";
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
@@ -74,7 +78,8 @@ public class UserController {
      * @return Response entity to determine if login is successful or not
      */
     @PostMapping("/api/user/login")
-    public ResponseEntity sigin(@RequestParam String userName, @RequestParam String password, HttpSession session) {
+    public ResponseEntity sigin(@RequestParam String userName, @RequestParam String password, HttpSession session) throws Exception
+    {
         String message = null;
         String passwordHash = hashPassword(password);
         String passwordU = String.valueOf(userService.findUserPassword(userName));
@@ -88,9 +93,8 @@ public class UserController {
             } else if (role.equalsIgnoreCase("user")) {
                 message = "You have logged in successfully!";
             }
-            User user = new User(userName);
             if(session.getAttribute("currUser")== null) {
-                session.setAttribute("currUser", user);
+                session.setAttribute("currUser", userName);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
@@ -128,6 +132,34 @@ public class UserController {
             else {
                 return new ResponseEntity<>("User Profile not found!", HttpStatus.NOT_FOUND);
             }
+        }
+    }
+
+    /*this method is used to get all new notification of the loggedin user
+      once the user sees the notifiction the read attribute is set to true
+     */
+    @GetMapping("/api/user/notification/new")
+    public ResponseEntity<?> newNotification(HttpSession session){
+        if (session.getAttribute("currUser") == null)
+            return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
+        else {
+            String currUser = (String)session.getAttribute("currUser");
+            int id = userService.findId(currUser);
+            return new ResponseEntity<>(notificationService.getNewNotifications(id),HttpStatus.OK);
+        }
+    }
+
+    /*this method is used to get all notification of the loggedin user
+    once the user sees the notification the read attribute is set to true
+     */
+    @GetMapping("/api/user/notification/all")
+    public ResponseEntity<?> allNotification(HttpSession session){
+        if (session.getAttribute("currUser") == null)
+            return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
+        else {
+            String currUser = (String)session.getAttribute("currUser");
+            int id = userService.findId(currUser);
+            return new ResponseEntity<>(notificationService.getAllNotifications(id),HttpStatus.OK);
         }
     }
 
