@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.upgrad.models.User;
 import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
 import java.sql.ResultSet;
 
@@ -39,7 +40,16 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     @Query(nativeQuery = true,value="SELECT role FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     String findUserRole(String userName);
 
+
     @Query(nativeQuery = true,value="SELECT id FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     int findId(String userName);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM users WHERE id = ?1")
+    void deleteUserById(int id);
+
+    @Query(nativeQuery = true,value="SELECT id,email,username FROM USERS ")
+    List<String> findAllUsers();
 
 }

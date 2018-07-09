@@ -8,8 +8,8 @@ import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
 import org.upgrad.repositories.UserRepository;
-
 import java.sql.ResultSet;
+import java.util.List;
 
 /*
     Author - Sugandha
@@ -71,4 +71,10 @@ public class UserServiceImp implements UserService {
         return userRepository.findId(userName);
     }
 
+    public void deleteUserById(int id) { userRepository.deleteUserById(id); }
+
+    @Override
+    public List<String> getAllUsers() {
+        return userRepository.findAllUsers();
+    }
 }
