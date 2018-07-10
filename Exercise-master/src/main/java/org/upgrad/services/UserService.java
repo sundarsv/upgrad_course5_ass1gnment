@@ -31,4 +31,6 @@ public interface UserService {
     public Boolean registerUserDetails(User user, User_Profile uf);
     public void deleteUserById(int id);
     public List<String> getAllUsers();
+
+    public User getUserByUsername(String userName);
 }

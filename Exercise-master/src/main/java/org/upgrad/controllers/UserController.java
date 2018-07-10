@@ -50,7 +50,7 @@ public class UserController {
         user_profile.setContactNumber(contactNumber);
         user_profile.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
         user_profile.setAboutMe(aboutMe);
-        user.setUser_profile(user_profile);
+      //  user.setUser_profile(user_profile);
 
         String message = null;
 
@@ -94,7 +94,8 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
-                //session.setAttribute("currUser", user);
+                User user = userService.getUserByUsername(userName);
+                session.setAttribute("currUser", user);
                 session.setAttribute("currUserRole",role);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);

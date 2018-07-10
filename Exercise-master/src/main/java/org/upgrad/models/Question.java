@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /*
     Author - Apoorva
@@ -60,19 +61,28 @@ public class Question {
     @Column(name = "user_id")
     private int user_id ;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.LAZY)
 //    @JsonIgnore
-//    private User user;
+    @Transient
+    private User user;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JsonIgnore
-//    private Category category;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Category> category;
 
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Category> getCategories() {
+        return category;
+    }
+
+    public void setCategories(Set<Category> category) {
+        this.category = category;
+    }
 }

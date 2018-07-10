@@ -78,4 +78,10 @@ public class UserServiceImp implements UserService {
     public List<String> getAllUsers() {
         return userRepository.findAllUsers();
     }
+
+    @Override
+    public User getUserByUsername(String userName) {
+        return userRepository.getUserByUsername(userName);
+    }
+
 }

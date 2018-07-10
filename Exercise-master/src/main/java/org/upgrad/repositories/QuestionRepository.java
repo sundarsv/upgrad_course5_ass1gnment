@@ -2,6 +2,7 @@ package org.upgrad.repositories;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.upgrad.models.Question;
 
@@ -9,12 +10,12 @@ import javax.transaction.Transactional;
 
 /*
     Author - Apoorva
-    Date - 8 July, 2018
+    Date - 9 July, 2018
     Description - Repository that contains CRUD operations for Question table
  */
 
 @Repository
-public interface QuestionRepository {
+public interface QuestionRepository extends CrudRepository<Question,Integer> {
 
     @Transactional
     @Modifying
@@ -23,11 +24,11 @@ public interface QuestionRepository {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="insert into question_category (id,question_id,int category_id) values (?1,?2,?3)")
+    @Query(nativeQuery = true,value="insert into question_category (id,question_id,category_id) values (?1,?2,?3)")
     void addCategory(int id, int question_id, int category_id);
 
-    @Query(nativeQuery = true,value="select * from question where id=?1")
-    Iterable<Question> getQuestionsByQuestionId(int id);
+    @Query(nativeQuery = true,value="select * from question where id IN ?1")
+    Iterable<Question> getQuestionsByQuestionId(Iterable<Integer> id);
 
     @Query(nativeQuery = true,value="select * from question where user_id=?1")
     Iterable<Question> getQuestionsByUser(int user_id);
@@ -38,5 +39,8 @@ public interface QuestionRepository {
     void deleteQuestionById(int id);
 
     @Query(nativeQuery = true,value="select question_id from question_category where category_id=?1")
-    int getQuestionId(int categoryId);
+    Iterable<Integer> getQuestionId(int categoryId);
+
+    @Query(nativeQuery = true,value="select user_id from question where id=?1")
+    int getUserIdByQuestion(int questionId);
 }

@@ -3,10 +3,8 @@ package org.upgrad.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.upgrad.models.Question;
 import org.upgrad.models.User;
 import org.upgrad.services.QuestionService;
 import org.upgrad.services.UserService;
@@ -35,7 +33,7 @@ public class QuestionController {
         else {
             User user = (User) session.getAttribute("currUser");
             Long id = System.currentTimeMillis() % 1000;
-            questionService.addQuestion(id.intValue(), content, user.getUser_profile().getUser_id(),categoryId);
+            questionService.addQuestion(id.intValue(), content, user.getId(),categoryId);
             return new ResponseEntity<>("Question added successfully.", HttpStatus.OK);
         }
     }
@@ -49,8 +47,7 @@ public class QuestionController {
 
         else {
             User user = (User) session.getAttribute("currUser");
-            int question_id = questionService.getQuestionId(categoryId);
-            return new ResponseEntity<>(questionService.getQuestionsByCategory(question_id), HttpStatus.OK);
+            return new ResponseEntity<>(questionService.getAllQuestionsByCategory(categoryId), HttpStatus.OK);
         }
     }
 
@@ -63,7 +60,7 @@ public class QuestionController {
 
         else {
             User user = (User) session.getAttribute("currUser");
-            return new ResponseEntity<>(questionService.getQuestionsByUser(user.getUser_profile().getUser_id()), HttpStatus.OK);
+            return new ResponseEntity<>(questionService.getAllQuestionsByUser(user.getId()), HttpStatus.OK);
         }
     }
 
@@ -75,8 +72,15 @@ public class QuestionController {
         }
 
         else {
-            questionService.deleteQuestion(questionId);
-            return new ResponseEntity<>("Question with questionId " +questionId +" deleted successfully",HttpStatus.OK);
+            User user = (User) session.getAttribute("currUser");
+            int userId = questionService.findUserIdfromQuestion(questionId);
+            if(userId == user.getId() || user.getRole().equalsIgnoreCase("admin")) {
+                questionService.deleteQuestion(questionId);
+                return new ResponseEntity<>("Question with questionId " + questionId + " deleted successfully", HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>("You do not have rights to delete this question!", HttpStatus.FORBIDDEN);
+            }
         }
     }
 
