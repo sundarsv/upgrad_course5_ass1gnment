@@ -91,6 +91,7 @@ public class UserController {
             User user = new User(userName);
             if(session.getAttribute("currUser")== null) {
                 session.setAttribute("currUser", user);
+                session.setAttribute("currUserRole",role);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }

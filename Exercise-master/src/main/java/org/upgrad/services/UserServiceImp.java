@@ -9,6 +9,8 @@ import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
 import org.upgrad.repositories.UserRepository;
 
+import java.util.List;
+
 /*
     Author - Sugandha
     Date - 2 July, 2018
@@ -66,4 +68,11 @@ public class UserServiceImp implements UserService {
         return userProfileRepository.getUserProfileById(userId);
     }
 
+    @Override
+    public void deleteUserById(int id) { userRepository.deleteUserById(id); }
+
+    @Override
+    public List<String> getAllUsers() {
+        return userRepository.findAllUsers();
+    }
 }
