@@ -8,8 +8,6 @@ import org.upgrad.models.User;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
-import java.sql.ResultSet;
-
 
 /*
     Author - Sugandha
@@ -39,7 +37,6 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 
     @Query(nativeQuery = true,value="SELECT role FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     String findUserRole(String userName);
-
 
     @Query(nativeQuery = true,value="SELECT id FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     int findId(String userName);

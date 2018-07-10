@@ -5,8 +5,6 @@ import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
 import java.util.List;
 
-import java.util.Date;
-
 /*
     Author - Sugandha
     Date - 2 July, 2018
@@ -29,8 +27,11 @@ public interface UserService {
     public int findId(String userName);
 
     public Boolean registerUserDetails(User user, User_Profile uf);
+
     public void deleteUserById(int id);
+
     public List<String> getAllUsers();
 
     public User getUserByUsername(String userName);
+
 }
