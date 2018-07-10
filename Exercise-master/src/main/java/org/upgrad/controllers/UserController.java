@@ -94,6 +94,8 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
+
+                session.setAttribute("currUserRole",role);
                 session.setAttribute("currUser", userName);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
