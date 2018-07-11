@@ -23,5 +23,11 @@ public class NotificationServiceImp implements NotificationService {
         notificationRepository.updateAllRead();
         return allNotifications;
     }
+
+    @Override
+    public void addnotification( int user_id , String message) {
+        notificationRepository.addNotification(user_id, message) ;
+    }
+
 }
 

@@ -7,6 +7,7 @@ import java.util.List;
 public interface NotificationService {
     List<Notification> getNewNotifications(int id);
     List<Notification> getAllNotifications(int id);
+    void addnotification( int user_id , String message) ;
 }
 
 

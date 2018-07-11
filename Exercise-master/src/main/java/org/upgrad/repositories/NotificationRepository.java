@@ -25,4 +25,11 @@ public interface NotificationRepository extends CrudRepository<Notification,Inte
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE NOTIFICATION SET READ = 't' WHERE READ = 'f'")
     void updateAllRead();
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value="insert into NOTIFICATION (user_id,message,date,read) values (?1,?2,NOW(),'f')")
+    void addNotification(int user_id , String message);
+
+
 }
