@@ -14,7 +14,7 @@ public class User {
     @Id
     @Column(name = "id")
     private int id ;
-    @Column(name = "userName")
+    @Column(name = "username")
     private String userName ;
     @Column(name = "email")
     private String email ;
@@ -22,9 +22,6 @@ public class User {
     private String password ;
     @Column(name = "role")
     private String role ;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User_Profile user_profile;
 
 
     public int getId() {
@@ -75,15 +72,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 '}';
-    }
-
-
-    public User_Profile getUser_profile() {
-        return user_profile;
-    }
-
-    public void setUser_profile(User_Profile user_profile) {
-        this.user_profile = user_profile;
     }
 
     public User() {

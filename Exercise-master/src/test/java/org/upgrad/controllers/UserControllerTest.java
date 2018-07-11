@@ -45,8 +45,8 @@ public class UserControllerTest {
     public void registerUser() throws Exception{
         String firstName = "software";
         String lastName= "development";
-        String userName = "upgrad";
-        String email = "upgrad@upgrad.com";
+        String userName = "upgrad1";
+        String email = "upgrad1@upgrad.com";
         String password = "12345";
         String passwordHash = Hashing.sha256()
                 .hashString(password, Charsets.US_ASCII)
@@ -57,7 +57,7 @@ public class UserControllerTest {
         String contactNumber = "1999999999";
 
         String url = "/api/user/signup";
-       mvc.perform(post(url)
+        mvc.perform(post(url)
                 .param("firstName", firstName)
                 .param("lastName", lastName)
                 .param("userName", userName)
@@ -82,8 +82,8 @@ public class UserControllerTest {
         String email = "upgrad@upgrad.com";
         String password = "12345";
         String country = "India";
-       String aboutMe = "hello world";
-       String dob = "2001-01-01";
+        String aboutMe = "hello world";
+        String dob = "2001-01-01";
         String contactNumber = "1999999999";
         Mockito.when(userService.findUserByUsername(userName)).thenReturn("upgrad");
         String url = "/api/user/signup";

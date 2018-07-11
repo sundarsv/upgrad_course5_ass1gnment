@@ -4,15 +4,11 @@ import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
 import org.upgrad.services.NotificationService;
 import org.upgrad.services.UserService;
-import org.upgrad.services.UserServiceImp;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -50,7 +46,7 @@ public class UserController {
         user_profile.setContactNumber(contactNumber);
         user_profile.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
         user_profile.setAboutMe(aboutMe);
-        user.setUser_profile(user_profile);
+      //  user.setUser_profile(user_profile);
 
         String message = null;
 
@@ -94,9 +90,9 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
-
+                User user = userService.getUserByUsername(userName);
+                session.setAttribute("currUser", user);
                 session.setAttribute("currUserRole",role);
-                session.setAttribute("currUser", userName);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
