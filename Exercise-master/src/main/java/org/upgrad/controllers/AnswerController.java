@@ -46,12 +46,11 @@ public class AnswerController {
             User user = (User) session.getAttribute("currUser");
 
             // Saving answer details in answer table.
-            int userId = questionService.findUserIdfromQuestion(questionId);
-            answerService.addQuestion(answer,userId,questionId);
+            answerService.addQuestion(answer,user.getId(),questionId);
 
             // Saving data in notification table, so that user's will get notification's.
-            String message =  "User with userId "+ userId + "has answered your question with questionId "+questionId ;
-            notificationService.addnotification(userId,message);
+            String message =  "User with userId "+ user.getId() + "has answered your question with questionId "+questionId ;
+            notificationService.addnotification(user.getId(),message);
 
             return new ResponseEntity<>("Answer to questionId " + questionId + " added successfully.", HttpStatus.OK);
         }

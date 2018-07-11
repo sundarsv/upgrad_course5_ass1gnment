@@ -90,9 +90,10 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
-                User user = userService.getUserByUsername(userName);
-                session.setAttribute("currUser", user);
+                Iterable<User> user = userService.getUserByUsername(userName);
+                session.setAttribute("currUser", user.iterator().next());
                 session.setAttribute("currUserRole",role);
+                System.out.println( session.getAttribute("currUser"));
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
