@@ -47,7 +47,8 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     @Query(nativeQuery = true,value="SELECT id,email,username FROM USERS ")
     List<String> findAllUsers();
 
-    @Query(nativeQuery = true,value="SELECT * FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
-    Iterable<User> getUserByUsername(String userName);
+    @Query(nativeQuery = true,value="select * from USERS where username=?1 ")
+    //Iterable<User> getUserByUsername(String userName);
+    User getUserByUsername(String userName);
 
 }

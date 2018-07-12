@@ -25,4 +25,21 @@ public interface AnswerRepository extends CrudRepository<Question,Integer> {
     @Query(nativeQuery = true,value="select * from answer where user_id=?1 and question_id=?2")
     Iterable<String> getAllAnswersByUserByQuestion(int user_id, int question_id);
 
+    @Query(nativeQuery = true,value="select * from answer where user_id=?1")
+    Iterable<String> getAllAnswersByUser(int user_id);
+
+    @Query(nativeQuery = true,value="select user_id from answer where id = ?1")
+    int getUserId(int id);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value="delete from answer where id=?1 ")
+    int deleteAnswerById(int id);
+
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value="UPDATE answer SET ans = ?1  WHERE id = ?2")
+    int editAnswerById(String ans, int id);
+
 }

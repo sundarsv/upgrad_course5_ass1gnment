@@ -32,6 +32,7 @@ public interface UserService {
 
     public List<String> getAllUsers();
 
-    public Iterable<User> getUserByUsername(String userName);
+    //public Iterable<User> getUserByUsername(String userName);
+    public User getUserByUsername(String userName);
 
 }
