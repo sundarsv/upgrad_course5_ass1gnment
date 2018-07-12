@@ -1,10 +1,12 @@
 package org.upgrad.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.Question;
 import org.upgrad.repositories.QuestionRepository;
 
+import java.sql.ResultSet;
 import java.util.Set;
 
 /*
@@ -22,10 +24,10 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     public void addQuestion(String content, int user_id,Set<Integer> categoryId) {
         questionRepository.addQuestion(content,user_id);
-//        for(Integer catId : categoryId) {
-//            Long id = System.currentTimeMillis() % 1000;
-//            questionRepository.addCategory(id.intValue(), question_id, catId);
-//        }
+        int question_id = questionRepository.getInsertedId();
+        for(Integer catId : categoryId) {
+            questionRepository.addCategory(question_id, catId);
+        }
     }
 
     @Override
