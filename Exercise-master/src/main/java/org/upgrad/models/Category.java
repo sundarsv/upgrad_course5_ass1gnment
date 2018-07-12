@@ -3,8 +3,11 @@ package org.upgrad.models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
 @Entity
 public class Category {
+
+
     @Id
     private int id;
     private String title;
