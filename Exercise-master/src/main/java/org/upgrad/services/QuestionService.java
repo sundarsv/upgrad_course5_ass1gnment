@@ -3,6 +3,7 @@ package org.upgrad.services;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.Question;
 
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -20,4 +21,5 @@ public interface QuestionService {
     void deleteQuestion(int id);
     Iterable<Integer> getQuestionId(int categoryId);
     int findUserIdfromQuestion(int questionId);
+    Iterable<Question> getAllQuestions();
 }
