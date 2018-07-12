@@ -90,9 +90,13 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
+            //    Iterable<User> user = userService.getUserByUsername(userName);
+             //   session.setAttribute("currUser", user.iterator().next());
+
                 User user = userService.getUserByUsername(userName);
                 session.setAttribute("currUser", user);
                 session.setAttribute("currUserRole",role);
+                System.out.println( session.getAttribute("currUser"));
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
@@ -141,8 +145,9 @@ public class UserController {
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {
-            String currUser = (String)session.getAttribute("currUser");
-            int id = userService.findId(currUser);
+            User currUser = (User)session.getAttribute("currUser");
+            String currUserName = currUser.getUserName();
+            int id = userService.findId(currUserName);
             return new ResponseEntity<>(notificationService.getNewNotifications(id),HttpStatus.OK);
         }
     }
@@ -155,8 +160,9 @@ public class UserController {
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {
-            String currUser = (String)session.getAttribute("currUser");
-            int id = userService.findId(currUser);
+            User currUser = (User)session.getAttribute("currUser");
+            String currUserName = currUser.getUserName();
+            int id = userService.findId(currUserName);
             return new ResponseEntity<>(notificationService.getAllNotifications(id),HttpStatus.OK);
         }
     }
