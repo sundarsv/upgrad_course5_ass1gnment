@@ -61,8 +61,7 @@ public class Question {
     @Column(name = "user_id")
     private int user_id ;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnore
+
     @Transient
     private User user;
 

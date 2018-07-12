@@ -20,12 +20,12 @@ public class QuestionServiceImp implements QuestionService {
     QuestionRepository questionRepository;
 
     @Override
-    public void addQuestion(int question_id, String content, int user_id,Set<Integer> categoryId) {
-        questionRepository.addQuestion(question_id,content,user_id);
-        for(Integer catId : categoryId) {
-            Long id = System.currentTimeMillis() % 1000;
-            questionRepository.addCategory(id.intValue(), question_id, catId);
-        }
+    public void addQuestion(String content, int user_id,Set<Integer> categoryId) {
+        questionRepository.addQuestion(content,user_id);
+//        for(Integer catId : categoryId) {
+//            Long id = System.currentTimeMillis() % 1000;
+//            questionRepository.addCategory(id.intValue(), question_id, catId);
+//        }
     }
 
     @Override

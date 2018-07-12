@@ -19,12 +19,12 @@ public interface QuestionRepository extends CrudRepository<Question,Integer> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="insert into question (id,content,date,user_id) values (?1,?2,NOW(),?3)")
-    void addQuestion(int id, String content, int user_id);
+    @Query(nativeQuery = true,value="insert into question (id,content,date,user_id) values (DEFAULT,?2,NOW(),?3)")
+    void addQuestion(String content, int user_id);
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="insert into question_category (id,question_id,category_id) values (?1,?2,?3)")
+    @Query(nativeQuery = true,value="insert into question_category (id,question_id,category_id) values (DEFAULT,?2,?3)")
     void addCategory(int id, int question_id, int category_id);
 
     @Query(nativeQuery = true,value="select * from question where id IN ?1")
