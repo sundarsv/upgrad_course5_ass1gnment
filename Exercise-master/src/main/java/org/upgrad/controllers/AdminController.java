@@ -46,16 +46,16 @@ public class AdminController {
             return new ResponseEntity<>("You do not have rights to access all users!", HttpStatus.UNAUTHORIZED);
         }
     }
-    /*creates a new category with descriptin and inserts into the database
+    /*creates a new category with description and inserts into the database
       accessible only by admin
      */
     @PostMapping("/api/admin/category")
-    public ResponseEntity<?> getAllUsers(@RequestParam String title,@RequestParam String description, HttpSession session) {
+    public ResponseEntity<?> categoriesCreation (@RequestParam String title,@RequestParam String description, HttpSession session) {
         if (session.getAttribute("currUser") == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else if (session.getAttribute("currUserRole").equals("admin")) {
             categoryService.updateCategory(title,description);
-            return new ResponseEntity<>(title+" category addes successfully.", HttpStatus.OK);
+            return new ResponseEntity<>(title+" category added successfully.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("You do not have rights to add categories.", HttpStatus.UNAUTHORIZED);
         }

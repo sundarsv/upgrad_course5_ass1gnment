@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.upgrad.models.Question;
 import org.upgrad.repositories.QuestionRepository;
 
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -51,4 +52,11 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     public int findUserIdfromQuestion(int questionId) {return questionRepository.getUserIdByQuestion(questionId); }
+
+    /* Iterating through Category model to return all Categories.  This is open for any user.
+     * Using CrudRespository class.  So don't need any changes to CategoryRepository*/
+    @Override
+    public Iterable<Question> getAllQuestions(){
+        return questionRepository.findAll();
+    }
 }
