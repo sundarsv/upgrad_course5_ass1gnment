@@ -142,8 +142,9 @@ public class UserController {
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {
-            String currUser = (String)session.getAttribute("currUser");
-            int id = userService.findId(currUser);
+            User currUser = (User)session.getAttribute("currUser");
+            String currUserName = currUser.getUserName();
+            int id = userService.findId(currUserName);
             return new ResponseEntity<>(notificationService.getNewNotifications(id),HttpStatus.OK);
         }
     }
@@ -156,8 +157,9 @@ public class UserController {
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {
-            String currUser = (String)session.getAttribute("currUser");
-            int id = userService.findId(currUser);
+            User currUser = (User)session.getAttribute("currUser");
+            String currUserName = currUser.getUserName();
+            int id = userService.findId(currUserName);
             return new ResponseEntity<>(notificationService.getAllNotifications(id),HttpStatus.OK);
         }
     }

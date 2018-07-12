@@ -67,7 +67,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public int findId(String userName) {
-        return userRepository.findId(userName);
+        return userRepository.findUserId(userName);
     }
 
     @Override

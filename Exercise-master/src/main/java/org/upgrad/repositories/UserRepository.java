@@ -39,9 +39,6 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     @Query(nativeQuery = true,value="SELECT role FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
     String findUserRole(String userName);
 
-    @Query(nativeQuery = true,value="SELECT id FROM USERS WHERE UPPER(USERNAME) = UPPER (?1) ")
-    int findId(String userName);
-
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM users WHERE id = ?1")
