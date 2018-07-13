@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.upgrad.models.Question;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /*
     Author - Sugandha
@@ -36,10 +37,14 @@ public interface AnswerRepository extends CrudRepository<Question,Integer> {
     @Query(nativeQuery = true,value="delete from answer where id=?1 ")
     int deleteAnswerById(int id);
 
-
     @Transactional
     @Modifying
     @Query(nativeQuery = true,value="UPDATE answer SET ans = ?1  WHERE id = ?2")
     int editAnswerById(String ans, int id);
 
+    @Query(nativeQuery = true,value="select id from answer where question_id=?1")
+    List<Integer> getAllAnswerId(int questionId);
+
+    @Query(nativeQuery = true,value="select * from answer where id=?1")
+    String getAnswer(int answerId);
 }

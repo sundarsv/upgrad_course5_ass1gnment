@@ -30,4 +30,9 @@ public class LikesServiceImp implements LikesService {
     public void unlike(int answerId, int user_id){
         likesRepository.unlike(answerId, user_id);
     }
+
+    @Override
+    public int getCount(int answerId) {
+        return likesRepository.getCount(answerId);
+    }
 }
