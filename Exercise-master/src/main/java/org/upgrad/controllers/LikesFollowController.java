@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.upgrad.models.User;
 import org.upgrad.services.AnswerService;
+import org.upgrad.services.FollowService;
 import org.upgrad.services.LikesService;
 import org.upgrad.services.NotificationService;
 import javax.servlet.http.HttpSession;
@@ -32,26 +33,27 @@ public class LikesFollowController {
     @Autowired
     AnswerService answerService;
 
+    @Autowired
+    FollowService followService;
+
     /* Method to 'like' an 'answer'.
-    * Input Param answerId is required.
-    * User has to be logged in.
-    * User can only 'like' an answer 'once'.
-    * The user who wrote the 'liked' 'answer' will be notified.
-    */
-    @PostMapping ("/api/like/{answerId}")
+     * Input Param answerId is required.
+     * User has to be logged in.
+     * User can only 'like' an answer 'once'.
+     * The user who wrote the 'liked' 'answer' will be notified.
+     */
+    @PostMapping("/api/like/{answerId}")
     public ResponseEntity<?> giveLikes(@PathVariable("answerId") int answerId, HttpSession session) {
-        if (session.getAttribute("currUser")==null) {
+        if (session.getAttribute("currUser") == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
-        }
-        else {
+        } else {
             User user = (User) session.getAttribute("currUser");
-            if (likesService.checkLikes(answerId, user.getId())!=null) {
-                return  new ResponseEntity<>("You have already liked this answer!", HttpStatus.CONFLICT);
-            }
-            else {
+            if (likesService.checkLikes(answerId, user.getId()) != null) {
+                return new ResponseEntity<>("You have already liked this answer!", HttpStatus.CONFLICT);
+            } else {
                 likesService.giveLikes(answerId, user.getId());
                 //Adding a notification to the 'user' who created the 'answer'
-                notificationService.addnotification(answerService.getUserIdAnswer(answerId), "User with userId"
+                notificationService.addnotification(answerService.findUserIdfromAnswer(answerId), "User with userId"
                         + user.getId() + " has liked your answer with answerId " + answerId);
                 return new ResponseEntity<>("answerId " + answerId + " liked successfully.", HttpStatus.OK);
             }
@@ -63,8 +65,8 @@ public class LikesFollowController {
      * User has to be logged in.
      * User can only 'unlike' an that they have 'liked'.
      */
-    @DeleteMapping ("/api/unlike/{answerId}")
-    public ResponseEntity<?> unlike (@PathVariable("answerId") int answerId, HttpSession session) {
+    @DeleteMapping("/api/unlike/{answerId}")
+    public ResponseEntity<?> unlike(@PathVariable("answerId") int answerId, HttpSession session) {
         if (session.getAttribute("currUser") == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
@@ -75,6 +77,49 @@ public class LikesFollowController {
                 likesService.unlike(answerId, user.getId());
                 return new ResponseEntity<>("You have unliked answer with answerId " + answerId + " successfully.", HttpStatus.OK);
             }
+        }
+    }
+
+    /* Method to 'follow' an 'category'.
+     * Input Param categoryId is required.
+     * User has to be logged in.
+     * User can only 'follow' an answer 'once'.
+     */
+    @PostMapping("/api/follow/{categoryId}")
+    public ResponseEntity<?> addFollowCategory(@PathVariable("categoryId") int categoryId, HttpSession session) {
+        if (session.getAttribute("currUser") == null) {
+            return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
+        } else {
+            User user = (User) session.getAttribute("currUser");
+            if (followService.checkFollows(categoryId, user.getId()) != null) {
+                return new ResponseEntity<>("You have already followed this category!", HttpStatus.CONFLICT);
+            } else {
+                followService.addFollowCategory(categoryId, user.getId());
+                return new ResponseEntity<>("categoryId " + categoryId + " followed successfully.", HttpStatus.OK);
+            }
+        }
+    }
+
+
+    /* Method to 'unfollow' an 'category'.
+     * Input Param categoryId is required.
+     * User has to be logged in.
+     * User can only 'unfollow' if he/she is already 'follow'ing it.
+     */
+    @DeleteMapping ("/api/unfollow/{categoryId}")
+    public ResponseEntity <?> unFollow (@PathVariable("categoryId") int categoryId, HttpSession session) {
+        if (session.getAttribute("currUser") == null) {
+            return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
+        } else {
+            User user = (User) session.getAttribute("currUser");
+            if (followService.checkFollows(categoryId, user.getId())==null) {
+                return new ResponseEntity<>("You are currently not following this category", HttpStatus.CONFLICT);
+            } else {
+                followService.unFollow(categoryId, user.getId());
+                return new ResponseEntity<>("You have unfollowed the category with categoryId " + categoryId +
+                        " successfully.", HttpStatus.OK);
+            }
+
         }
     }
 }
