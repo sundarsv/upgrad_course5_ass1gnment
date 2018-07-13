@@ -61,11 +61,6 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User_Profile retrieveUserProfile(int userId) {
-        return userProfileRepository.getUserProfileById(userId);
-    }
-
-    @Override
     public int findId(String userName) {
         return userRepository.findUserId(userName);
     }

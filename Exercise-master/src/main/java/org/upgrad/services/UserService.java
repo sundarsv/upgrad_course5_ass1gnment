@@ -22,8 +22,6 @@ public interface UserService {
 
     public String findUserRole(String userName);
 
-    public User_Profile retrieveUserProfile(int userId);
-
     public int findId(String userName);
 
     public Boolean registerUserDetails(User user, User_Profile uf);
@@ -32,7 +30,6 @@ public interface UserService {
 
     public List<String> getAllUsers();
 
-    //public Iterable<User> getUserByUsername(String userName);
     public User getUserByUsername(String userName);
 
 }

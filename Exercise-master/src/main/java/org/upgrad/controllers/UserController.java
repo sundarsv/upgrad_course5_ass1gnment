@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
 import org.upgrad.services.NotificationService;
+import org.upgrad.services.UserProfileService;
 import org.upgrad.services.UserService;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
@@ -25,14 +26,17 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private UserProfileService userProfileService;
+
+    @Autowired
     private NotificationService notificationService;
 
     /*
      *  It checks signup the user along with its details if user is not already present.
      *  This method gives relevant messages in case username or email is already registered
      */
-    @PostMapping("/api/user/signup/")
-    public ResponseEntity registerUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam(value = "lastName",required = false) String lastName, @RequestParam(value = "aboutMe",required = false) String aboutMe, @RequestParam(value = "contactNumber",required = false) String contactNumber, @RequestParam String dob, @RequestParam String country) throws Exception {
+    @PostMapping("/api/user/signup")
+    public ResponseEntity registerUser(@RequestParam("userName") String userName, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("firstName") String firstName, @RequestParam(value = "lastName",required = false) String lastName, @RequestParam(value = "aboutMe",required = false) String aboutMe, @RequestParam(value = "contactNumber",required = false) String contactNumber, @RequestParam("dob") String dob, @RequestParam("country") String country) throws Exception {
 
         // Setting url data into user model class.
         User user = new User();
@@ -46,7 +50,6 @@ public class UserController {
         user_profile.setContactNumber(contactNumber);
         user_profile.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
         user_profile.setAboutMe(aboutMe);
-      //  user.setUser_profile(user_profile);
 
         String message = null;
 
@@ -127,9 +130,9 @@ public class UserController {
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint", HttpStatus.UNAUTHORIZED);
         else {
-            User_Profile userProfile = userService.retrieveUserProfile(userId);
+            User_Profile userProfile = userProfileService.retrieveUserProfile(userId);
             if (userProfile!=null) {
-                return new ResponseEntity<>(userService.retrieveUserProfile(userId), HttpStatus.OK);
+                return new ResponseEntity<>(userProfileService.retrieveUserProfile(userId), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<>("User Profile not found!", HttpStatus.NOT_FOUND);
