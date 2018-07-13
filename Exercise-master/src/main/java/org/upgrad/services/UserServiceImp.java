@@ -2,6 +2,7 @@ package org.upgrad.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.upgrad.models.Question;
 import org.upgrad.models.User;
 import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
@@ -66,7 +67,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public int findId(String userName) {
-        return userRepository.findId(userName);
+        return userRepository.findUserId(userName);
     }
 
     @Override
@@ -76,6 +77,11 @@ public class UserServiceImp implements UserService {
     public List<String> getAllUsers() {
         return userRepository.findAllUsers();
     }
+
+   /* @Override
+    public Iterable<User getUserByUsername(String userName) {
+        return userRepository.getUserByUsername(userName);
+    } */
 
     @Override
     public User getUserByUsername(String userName) {
