@@ -46,7 +46,7 @@ public class AnswerController {
             User user = (User) session.getAttribute("currUser");
 
             // Saving answer details in answer table.
-            answerService.addQuestion(answer,user.getId(),questionId);
+            answerService.addAnswer(answer,user.getId(),questionId);
 
             // Saving data in notification table, so that user's will get notification's.
             String message =  "User with userId "+ user.getId() + "has answered your question with questionId "+questionId ;
@@ -73,7 +73,7 @@ public class AnswerController {
         }
         else {
             User user = (User) session.getAttribute("currUser");
-            int userId =  answerService.getUserIdAnswer(answerId)  ;
+            int userId =  answerService.findUserIdfromAnswer(answerId)  ;
 
             if ( session.getAttribute("currUserRole").equals("admin")  || user.getId() == userId   ) {
                 //Updating the new answer for that id.
@@ -139,7 +139,7 @@ public class AnswerController {
         }
         else {
             User user = (User) session.getAttribute("currUser");
-            int userId =  answerService.getUserIdAnswer(answerId)  ;
+            int userId =  answerService.findUserIdfromAnswer(answerId)  ;
 
             if ( session.getAttribute("currUserRole").equals("admin")  || user.getId() == userId   ) {
                 answerService.deleteAnswerById(answerId);
@@ -166,7 +166,7 @@ public class AnswerController {
     with their count of likes, sorted(descending order) based on the number of likes for
     specific questionId and return the JSON response of same with corresponding HTTP status. */
 
-    /* @GetMapping("/api/answer/likes/{questionId}")
+  /*  @GetMapping("/api/answer/likes/{questionId}")
     public ResponseEntity<?> getAllAnswersByLikes(@PathVariable("questionId") int questionId, HttpSession session) {
 
         if (session.getAttribute("currUser")==null) {

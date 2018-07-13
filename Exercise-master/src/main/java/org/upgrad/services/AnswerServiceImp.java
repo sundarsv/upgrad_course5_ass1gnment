@@ -12,7 +12,7 @@ public class AnswerServiceImp implements AnswerService{
     AnswerRepository answerRepository;
 
     @Override
-    public int addQuestion(String ans, int user_id ,int question_id) {
+    public int addAnswer(String ans, int user_id ,int question_id) {
        return answerRepository.addAnswer(ans,user_id, question_id) ;
     }
 
@@ -26,7 +26,7 @@ public class AnswerServiceImp implements AnswerService{
         return answerRepository.getAllAnswersByUser(user_id);
     }
 
-    public int getUserIdAnswer(int answer_id)
+    public int findUserIdfromAnswer(int answer_id)
     {
         return answerRepository.getUserId(answer_id);
     }
