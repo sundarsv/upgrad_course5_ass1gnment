@@ -10,6 +10,7 @@ import org.upgrad.repositories.CategoryRepository;
 public class CategoryServiceImp implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
+
     @Override
     public void updateCategory(String title, String description) {
         categoryRepository.updateCategory(title,description);
