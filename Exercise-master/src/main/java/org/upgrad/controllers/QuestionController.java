@@ -28,19 +28,19 @@ public class QuestionController {
      * It requests the parameters of the 'categoryId' to which a question belongs and the question to be added.
      * saves the information of question, the user who created the question, categories to which the question belongs
      * @param categoryId Set of category Ids to which question belongs
-     * @param content content of the question
+     * @param question content of the question
      * @param session HTTP session object
      * @return returns the appropriate JSON response
      */
     @PostMapping("/api/question")
-    public ResponseEntity<?> createQuestion(@RequestParam("categoryId") Set<Integer> categoryId, @RequestParam("content") String content, HttpSession session) {
+    public ResponseEntity<?> createQuestion(@RequestParam("categoryId") Set<Integer> categoryId, @RequestParam("question") String question, HttpSession session) {
 
         if (session.getAttribute("currUser")==null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!",HttpStatus.UNAUTHORIZED);
         }
         else {
             User user = (User) session.getAttribute("currUser");
-            questionService.addQuestion(content, user.getId(),categoryId);
+            questionService.addQuestion(question, user.getId(),categoryId);
             return new ResponseEntity<>("Question added successfully.", HttpStatus.OK);
         }
     }
@@ -100,7 +100,7 @@ public class QuestionController {
             int userId = questionService.findUserIdfromQuestion(questionId);
             if(userId == user.getId() || user.getRole().equalsIgnoreCase("admin")) {
                 questionService.deleteQuestion(questionId);
-                return new ResponseEntity<>("Question with questionId " + questionId + " deleted successfully", HttpStatus.OK);
+                return new ResponseEntity<>("Question with questionId " + questionId + " deleted successfully.", HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<>("You do not have rights to delete this question!", HttpStatus.FORBIDDEN);

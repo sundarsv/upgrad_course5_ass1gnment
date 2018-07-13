@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.upgrad.models.User;
+import org.upgrad.services.NotificationService;
+import org.upgrad.services.UserProfileService;
 import org.upgrad.services.UserService;
 
 import static org.hamcrest.Matchers.containsString;
@@ -33,20 +35,20 @@ public class UserControllerTest {
        private UserService userService;
 
        protected MockHttpSession session;
-//
-//    @MockBean
-//    private UserProfileService userProfileService;
-//
-//    @MockBean
-//    private NotificationService notificationService;
+
+      @MockBean
+      private UserProfileService userProfileService;
+
+    @MockBean
+    private NotificationService notificationService;
 
 
     @Test
     public void registerUser() throws Exception{
         String firstName = "software";
         String lastName= "development";
-        String userName = "upgrad1";
-        String email = "upgrad1@upgrad.com";
+        String userName = "upgrad";
+        String email = "upgrad@upgrad.com";
         String password = "12345";
         String passwordHash = Hashing.sha256()
                 .hashString(password, Charsets.US_ASCII)
