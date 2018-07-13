@@ -33,4 +33,7 @@ public interface LikesRepository extends CrudRepository<Likes, Integer> {
     @Query(nativeQuery = true,value="delete from likes where answer_id=?1 and user_id=?2")
     void unlike (int answerId, int user_id);
 
+    @Query(nativeQuery = true,value = "select count(*) from likes where answer_id = ?1 ")
+    int getCount(int answerId);
+
 }

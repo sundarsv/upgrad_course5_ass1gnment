@@ -6,9 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.services.AnswerService;
+import org.upgrad.services.LikesService;
 import org.upgrad.services.NotificationService;
 import org.upgrad.services.QuestionService;
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /*
  * Author - Sugandha
@@ -18,6 +23,8 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class AnswerController {
+    @Autowired
+    private LikesService likesService;
 
     @Autowired
     private AnswerService answerService ;
@@ -150,11 +157,7 @@ public class AnswerController {
             }
         }
     }
-
-
-    //TODO : Can be implemented after likes API
-
-    /* getAllAnswersByLikes - "/api/answer/likes/{questionId}"
+ /* getAllAnswersByLikes - "/api/answer/likes/{questionId}"
 
     It should be a GET request.
     This endpoint must request the path variable 'questionId' of data type Integer for which
@@ -166,16 +169,40 @@ public class AnswerController {
     with their count of likes, sorted(descending order) based on the number of likes for
     specific questionId and return the JSON response of same with corresponding HTTP status. */
 
-  /*  @GetMapping("/api/answer/likes/{questionId}")
+    @GetMapping("/api/answer/likes/{questionId}")
     public ResponseEntity<?> getAllAnswersByLikes(@PathVariable("questionId") int questionId, HttpSession session) {
 
         if (session.getAttribute("currUser")==null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         }
         else {
-
-            return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
-
+            Map<String, Integer> DescendingOrder = new TreeMap<String, Integer>();
+            List<Integer> answers = answerService.getAllAnswerId(questionId);
+            for ( int answerId :answers){
+                String answer = answerService.getAnswer(answerId);
+                int count = likesService.getCount(answerId);
+                DescendingOrder.put(answer,count);
+            }
+            Map sortedMap = new TreeMap(new ValueComparator(DescendingOrder));
+            sortedMap.putAll(DescendingOrder);
+            return new ResponseEntity<>(DescendingOrder,HttpStatus.OK);
         }
-    } */
+    }
 }
+class ValueComparator implements Comparator {
+    Map map;
+
+    public ValueComparator(Map map) {
+        this.map = map;
+    }
+
+    public int compare(Object keyA, Object keyB) {
+        Comparable valueA = (Comparable) map.get(keyA);
+        Comparable valueB = (Comparable) map.get(keyB);
+        return valueB.compareTo(valueA);
+    }
+}
+
+
+
+

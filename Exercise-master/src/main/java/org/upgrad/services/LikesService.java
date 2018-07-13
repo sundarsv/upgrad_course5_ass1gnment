@@ -13,4 +13,5 @@ public interface LikesService {
     void giveLikes(int answerId, int user_id);
     String checkLikes(int answerId, int user_id);
     void unlike(int answerId, int user_id);
+    public int getCount(int answerId);
 }

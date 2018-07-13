@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.upgrad.models.Answer;
 import org.upgrad.repositories.AnswerRepository;
 
+import java.util.List;
+
 @Service
 public class AnswerServiceImp implements AnswerService{
 
@@ -39,5 +41,13 @@ public class AnswerServiceImp implements AnswerService{
     public void editAnswerById(String answer ,int answer_id){
         answerRepository.editAnswerById(answer ,answer_id);
     }
+    @Override
+    public List<Integer> getAllAnswerId(int questionId) {
+        return answerRepository.getAllAnswerId(questionId);
+    }
 
+    @Override
+    public String getAnswer(int answerId) {
+        return answerRepository.getAnswer(answerId);
+    }
 }
