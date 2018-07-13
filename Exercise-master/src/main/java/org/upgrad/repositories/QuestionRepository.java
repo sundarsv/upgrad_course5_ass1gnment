@@ -28,7 +28,7 @@ public interface QuestionRepository extends CrudRepository<Question,Integer> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="insert into question_category (id,question_id,category_id) values (DEFAULT,?2,?3)")
+    @Query(nativeQuery = true,value="insert into question_category (id,question_id,category_id) values (DEFAULT,?1,?2)")
     void addCategory(int question_id, int category_id);
 
     @Query(nativeQuery = true,value="select * from question where id IN ?1")
