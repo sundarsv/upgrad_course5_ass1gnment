@@ -26,7 +26,7 @@ public class CommentController {
     its a post request
      */
     @PostMapping("/api/comment")
-    public ResponseEntity<?> addComment(@RequestParam int answerId, String comment, HttpSession session) {
+    public ResponseEntity<?> giveComment(@RequestParam int answerId, String comment, HttpSession session) {
 
         // Checking if the user is already registered or not
         if (session.getAttribute("currUser") == null) {
@@ -52,7 +52,7 @@ public class CommentController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
             User user = (User) session.getAttribute("currUser");
-            int userId = commentService.getUserIdComment(commentId);
+            int userId = commentService.findUserIdfromComment(commentId);
 
             if (session.getAttribute("currUserRole").equals("admin") || user.getId() == userId) {
                 //Updating the new answer for that id.
@@ -75,7 +75,7 @@ public class CommentController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
             User user = (User) session.getAttribute("currUser");
-            int userId = commentService.getUserIdComment(commentId);
+            int userId = commentService.findUserIdfromComment(commentId);
 
             if (session.getAttribute("currUserRole").equals("admin") || user.getId() == userId) {
                 //Updating the new answer for that id.
@@ -91,7 +91,7 @@ public class CommentController {
         its a get request
          */
     @GetMapping("/api/comment/all/{answerId}")
-    public ResponseEntity<?> getAllAnswersToQuestion(@PathVariable("answerId") int answerId, HttpSession session) {
+    public ResponseEntity<?> getAllCommentsByAnswer(@PathVariable("answerId") int answerId, HttpSession session) {
 
         // Checking if the user is already registered or not
         if (session.getAttribute("currUser") == null) {

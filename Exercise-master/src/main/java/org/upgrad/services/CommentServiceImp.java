@@ -16,7 +16,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public int getUserIdComment(int commentId) {
+    public int findUserIdfromComment(int commentId) {
         return commentRepository.getUserId(commentId);
     }
 
