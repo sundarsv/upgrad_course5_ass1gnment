@@ -15,7 +15,7 @@ import java.util.Set;
 @Service
 public interface QuestionService {
 
-    void addQuestion(int id, String content, int user_id, Set<Integer> categoryId);
+    void addQuestion(String content, int user_id, Set<Integer> categoryId);
     Iterable<Question> getAllQuestionsByCategory(int categoryId);
     Iterable<Question> getAllQuestionsByUser(int user_id);
     void deleteQuestion(int id);
