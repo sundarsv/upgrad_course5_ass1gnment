@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ public class Notification {
     private int id;
     private int user_id;
     private String message;
-    private Date date;
+    private LocalDateTime date;
     private Boolean read;
     public Boolean getRead() {
         return read;
@@ -49,13 +50,14 @@ public class Notification {
         this.message = message;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
     @Override
     public String toString() {
         return "Notification{" +

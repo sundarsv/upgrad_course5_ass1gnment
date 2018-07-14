@@ -32,6 +32,6 @@ public interface CommentRepository extends CrudRepository<Comment,Integer> {
     @Query(nativeQuery = true,value="delete from comment where id=?1")
     void deleteCommentById(int commentId);
 
-    @Query(nativeQuery = true,value="select * from comment where user_id=?1 and answer_id=?2")
-    Iterable<String> getAllComments(int userId, int answerId);
+    @Query(nativeQuery = true,value="select * from comment where answer_id=?1")
+    Iterable<String> getAllComments(int answerId);
 }

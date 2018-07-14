@@ -31,7 +31,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public Iterable<String> getAllComments(int userId, int answerId) {
-        return commentRepository.getAllComments(userId,answerId);
+    public Iterable<String> getAllComments(int answerId) {
+        return commentRepository.getAllComments(answerId);
     }
 }

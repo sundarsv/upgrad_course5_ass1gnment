@@ -99,7 +99,7 @@ public class CommentController {
         } else {
             User user = (User) session.getAttribute("currUser");
             // Returns all answers corresponding to questionId for current user
-            return new ResponseEntity<>(commentService.getAllComments(user.getId(), answerId), HttpStatus.OK);
+            return new ResponseEntity<>(commentService.getAllComments(answerId), HttpStatus.OK);
         }
     }
 }

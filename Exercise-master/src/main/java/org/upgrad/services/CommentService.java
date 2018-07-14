@@ -8,5 +8,5 @@ public interface CommentService {
     public int findUserIdfromComment(int commentId);
     public void editCommentById(String comment,int commentId);
     public void deleteCommentById(int commentId);
-    public Iterable<String> getAllComments(int userId,int answerId);
+    public Iterable<String> getAllComments(int answerId);
 }
