@@ -43,7 +43,7 @@ public class AnswerController {
      * @return Response entity to determine if answer is saved in database.
      * */
     @PostMapping("/api/answer")
-    public ResponseEntity<?> answerQuestion(@RequestParam int questionId, String answer , HttpSession session) {
+    public ResponseEntity<?> createAnswer(@RequestParam int questionId, String answer , HttpSession session) {
 
         // Checking if the user is already registered or not
         if (session.getAttribute("currUser")==null) {
@@ -109,7 +109,7 @@ public class AnswerController {
         else {
             User user = (User) session.getAttribute("currUser");
             // Returns all answers corresponding to questionId for current user
-            return new ResponseEntity<>(answerService.getAllAnswersToQuestion(user.getId(), questionId), HttpStatus.OK);
+            return new ResponseEntity<>(answerService.getAllAnswersToQuestion(questionId), HttpStatus.OK);
         }
     }
 
@@ -189,6 +189,8 @@ public class AnswerController {
         }
     }
 }
+
+
 class ValueComparator implements Comparator {
     Map map;
 
