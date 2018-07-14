@@ -73,11 +73,6 @@ public class UserServiceImp implements UserService {
         return userRepository.findAllUsers();
     }
 
-   /* @Override
-    public Iterable<User getUserByUsername(String userName) {
-        return userRepository.getUserByUsername(userName);
-    } */
-
     @Override
     public User getUserByUsername(String userName) {
         return userRepository.getUserByUsername(userName);

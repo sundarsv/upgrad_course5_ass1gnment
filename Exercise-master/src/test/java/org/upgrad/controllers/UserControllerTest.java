@@ -39,8 +39,8 @@ public class UserControllerTest {
       @MockBean
       private UserProfileService userProfileService;
 
-    @MockBean
-    private NotificationService notificationService;
+     @MockBean
+     private NotificationService notificationService;
 
 
     @Test

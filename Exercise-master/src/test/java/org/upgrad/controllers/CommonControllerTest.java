@@ -14,9 +14,7 @@ import org.upgrad.models.Category;
 import org.upgrad.models.Question;
 import org.upgrad.services.CategoryService;
 import org.upgrad.services.QuestionService;
-
 import java.util.List;
-
 import static java.util.Collections.singletonList;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;

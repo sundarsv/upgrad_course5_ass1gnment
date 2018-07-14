@@ -93,9 +93,6 @@ public class UserController {
                 message = "You have logged in successfully!";
             }
             if(session.getAttribute("currUser")== null) {
-            //    Iterable<User> user = userService.getUserByUsername(userName);
-             //   session.setAttribute("currUser", user.iterator().next());
-
                 User user = userService.getUserByUsername(userName);
                 session.setAttribute("currUser", user);
                 session.setAttribute("currUserRole",role);
