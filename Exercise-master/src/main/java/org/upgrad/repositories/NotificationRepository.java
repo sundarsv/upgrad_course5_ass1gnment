@@ -28,7 +28,7 @@ public interface NotificationRepository extends CrudRepository<Notification,Inte
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="insert into NOTIFICATION (user_id,message,date,read) values (?1,?2,NOW(),'f')")
+    @Query(nativeQuery = true,value="insert into NOTIFICATION (id,user_id,message,date,read) values (DEFAULT,?1,?2,NOW(),'f')")
     void addNotification(int user_id , String message);
 
 

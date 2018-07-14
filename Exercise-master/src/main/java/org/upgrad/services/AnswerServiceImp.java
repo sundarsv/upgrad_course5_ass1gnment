@@ -18,9 +18,9 @@ public class AnswerServiceImp implements AnswerService{
        return answerRepository.addAnswer(ans,user_id, question_id) ;
     }
 
-    public Iterable<String> getAllAnswersToQuestion(int user_id, int question_id)
+    public Iterable<String> getAllAnswersToQuestion(int question_id)
     {
-        return answerRepository.getAllAnswersByUserByQuestion(user_id, question_id);
+        return answerRepository.getAllAnswersByUserByQuestion(question_id);
     }
 
     public Iterable<String> getAllAnswersByUser(int user_id)
