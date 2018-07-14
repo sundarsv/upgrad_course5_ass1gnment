@@ -71,6 +71,7 @@ public class LikesFollowController {
         if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
+            System.out.println("likes got "+likeService.getLikes(user.getId(), answerId));
             if (likeService.getLikes(user.getId(), answerId) == null) {
                 return new ResponseEntity<>("You have not liked this answer.", HttpStatus.CONFLICT);
             } else {
