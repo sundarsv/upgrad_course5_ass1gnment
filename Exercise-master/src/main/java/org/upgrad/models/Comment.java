@@ -2,6 +2,7 @@ package org.upgrad.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.Date;
 /*
@@ -16,8 +17,19 @@ public class Comment {
     private String content;
     private LocalDateTime date;
     private int user_id;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     private int answer_id;
     private LocalDateTime modifiedon;
+    @Transient
+    private User user;
 
     public int getId() {
         return id;
