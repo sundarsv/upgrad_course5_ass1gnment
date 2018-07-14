@@ -157,18 +157,14 @@ public class AnswerController {
             }
         }
     }
- /* getAllAnswersByLikes - "/api/answer/likes/{questionId}"
 
-    It should be a GET request.
-    This endpoint must request the path variable 'questionId' of data type Integer for which
-    all the answers to be retrieved and sorted in descending order based on the number of likes
-    for each answer. The answer with most number of likes should come first.
-    If the user is not logged in and tries to access the endpoint, return the JSON response
-    "Please Login first to access this endpoint!" with the corresponding HTTP status.
-    If the user is logged in and tries to access this endpoint, retrieve all the answers
-    with their count of likes, sorted(descending order) based on the number of likes for
-    specific questionId and return the JSON response of same with corresponding HTTP status. */
-
+    /*
+     * It is used to return all answers stored by no. of likes.
+     * @param session HTTP session for status
+     * @param questionId for which all answers to be retrieved.
+     * @return Response entity that list of all answers along-with no. of
+     * likes for that particular question sorted by no of likes.
+     */
     @GetMapping("/api/answer/likes/{questionId}")
     public ResponseEntity<?> getAllAnswersByLikes(@PathVariable("questionId") int questionId, HttpSession session) {
 
@@ -189,7 +185,9 @@ public class AnswerController {
         }
     }
 }
-
+/*
+    ValueComparator class to sort the map om bases of value.
+ */
 
 class ValueComparator implements Comparator {
     Map map;
@@ -198,6 +196,7 @@ class ValueComparator implements Comparator {
         this.map = map;
     }
 
+    // Compares two objects
     public int compare(Object keyA, Object keyB) {
         Comparable valueA = (Comparable) map.get(keyA);
         Comparable valueB = (Comparable) map.get(keyB);
