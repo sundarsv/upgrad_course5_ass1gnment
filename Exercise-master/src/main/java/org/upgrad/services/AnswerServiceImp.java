@@ -18,12 +18,12 @@ public class AnswerServiceImp implements AnswerService{
        return answerRepository.addAnswer(ans,user_id, question_id) ;
     }
 
-    public Iterable<String> getAllAnswersToQuestion(int question_id)
+    public Iterable<Answer> getAllAnswersToQuestion(int question_id)
     {
         return answerRepository.getAllAnswersByUserByQuestion(question_id);
     }
 
-    public Iterable<String> getAllAnswersByUser(int user_id)
+    public Iterable<Answer> getAllAnswersByUser(int user_id)
     {
         return answerRepository.getAllAnswersByUser(user_id);
     }

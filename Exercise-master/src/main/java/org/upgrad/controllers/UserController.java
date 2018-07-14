@@ -95,7 +95,6 @@ public class UserController {
             if(session.getAttribute("currUser")== null) {
                 User user = userService.getUserByUsername(userName);
                 session.setAttribute("currUser", user);
-                session.setAttribute("currUserRole",role);
             }
             return new ResponseEntity <> (message, HttpStatus.OK);
         }
@@ -146,7 +145,7 @@ public class UserController {
         else {
             User currUser = (User)session.getAttribute("currUser");
             String currUserName = currUser.getUserName();
-            int id = userService.findId(currUserName);
+            int id = userService.findUserId(currUserName);
             return new ResponseEntity<>(notificationService.getNewNotifications(id),HttpStatus.OK);
         }
     }
@@ -161,7 +160,7 @@ public class UserController {
         else {
             User currUser = (User)session.getAttribute("currUser");
             String currUserName = currUser.getUserName();
-            int id = userService.findId(currUserName);
+            int id = userService.findUserId(currUserName);
             return new ResponseEntity<>(notificationService.getAllNotifications(id),HttpStatus.OK);
         }
     }

@@ -29,14 +29,14 @@ public class CommentController {
     public ResponseEntity<?> giveComment(@RequestParam int answerId, String comment, HttpSession session) {
 
         // Checking if the user is already registered or not
-        if (session.getAttribute("currUser") == null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            User user = (User) session.getAttribute("currUser");
             commentService.addComment(comment, user.getId(), answerId);
             String message = "User with userId " + user.getId() + "has commented on your answer with answerId " + answerId;
             notificationService.addnotification(user.getId(), message);
-            return new ResponseEntity<>("answerId " + answerId + " commented successfully.", HttpStatus.OK);
+            return new ResponseEntity<>(" answerId " + answerId + " commented successfully.", HttpStatus.OK);
         }
     }
     /*edits comment of an answer
@@ -48,18 +48,18 @@ public class CommentController {
     public ResponseEntity<?> editComment(@PathVariable("commentId") int commentId, String comment, HttpSession session) {
 
         // Checking if the user is already registered or not
-        if (session.getAttribute("currUser") == null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            User user = (User) session.getAttribute("currUser");
             int userId = commentService.findUserIdfromComment(commentId);
 
-            if (session.getAttribute("currUserRole").equals("admin") || user.getId() == userId) {
+            if (user.getRole().equals("admin") || user.getId() == userId) {
                 //Updating the new answer for that id.
                 commentService.editCommentById(comment, commentId);
-                return new ResponseEntity<>("Comment with commentId" + commentId + " edited successfully.", HttpStatus.OK);
+                return new ResponseEntity<>(" Comment with commentId " + commentId + " edited successfully.", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("You do not have rights to edit this comment.", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("You do not have rights to edit this comment!", HttpStatus.UNAUTHORIZED);
             }
         }
     }
@@ -71,18 +71,18 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(@PathVariable("commentId") int commentId, HttpSession session) {
 
         // Checking if the user is already registered or not
-        if (session.getAttribute("currUser") == null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            User user = (User) session.getAttribute("currUser");
             int userId = commentService.findUserIdfromComment(commentId);
 
-            if (session.getAttribute("currUserRole").equals("admin") || user.getId() == userId) {
+            if (user.getRole().equals("admin") || user.getId() == userId) {
                 //Updating the new answer for that id.
                 commentService.deleteCommentById(commentId);
-                return new ResponseEntity<>("Comment with commentId" + commentId + " deleted successfully.", HttpStatus.OK);
+                return new ResponseEntity<>(" Comment with commentId " + commentId + " deleted successfully.", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("You do not have rights to edit this comment.", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("You do not have rights to delete this comment!", HttpStatus.UNAUTHORIZED);
             }
         }
     }
@@ -94,10 +94,10 @@ public class CommentController {
     public ResponseEntity<?> getAllCommentsByAnswer(@PathVariable("answerId") int answerId, HttpSession session) {
 
         // Checking if the user is already registered or not
-        if (session.getAttribute("currUser") == null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            User user = (User) session.getAttribute("currUser");
             // Returns all answers corresponding to questionId for current user
             return new ResponseEntity<>(commentService.getAllComments(answerId), HttpStatus.OK);
         }

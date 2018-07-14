@@ -2,6 +2,7 @@ package org.upgrad.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.upgrad.models.Comment;
 import org.upgrad.repositories.CommentRepository;
 
 @Service
@@ -31,7 +32,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public Iterable<String> getAllComments(int answerId) {
+    public Iterable<Comment> getAllComments(int answerId) {
         return commentRepository.getAllComments(answerId);
     }
 }
