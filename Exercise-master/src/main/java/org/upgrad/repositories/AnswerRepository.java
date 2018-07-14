@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.upgrad.models.Answer;
 import org.upgrad.models.Question;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 
 @Repository
-public interface AnswerRepository extends CrudRepository<Question,Integer> {
+public interface AnswerRepository extends CrudRepository<Answer,Integer> {
 
     @Transactional
     @Modifying
