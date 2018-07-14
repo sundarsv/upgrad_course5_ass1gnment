@@ -39,7 +39,7 @@ public interface AnswerRepository extends CrudRepository<Question,Integer> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true,value="UPDATE answer SET ans = ?1  WHERE id = ?2")
+    @Query(nativeQuery = true,value="UPDATE answer SET ans = ?1 , modifiedon = NOW() WHERE id = ?2")
     int editAnswerById(String ans, int id);
 
     @Query(nativeQuery = true,value="select id from answer where question_id=?1")
