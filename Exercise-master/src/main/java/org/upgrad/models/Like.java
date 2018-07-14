@@ -10,7 +10,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class Likes {
+public class Like {
     @Id
     private int id;
     private int user_id;

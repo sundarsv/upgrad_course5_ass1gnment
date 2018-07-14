@@ -31,4 +31,9 @@ public class FollowServiceImp implements FollowService {
         followRepository.unFollow(category_id, user_id);
     }
 
+    @Override
+    public Integer findUserId(int category_id, int user_id) {
+       return followRepository.findUserId(category_id,user_id);
+    }
+
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.upgrad.models.User;
 import org.upgrad.services.AnswerService;
 import org.upgrad.services.FollowService;
-import org.upgrad.services.LikesService;
+import org.upgrad.services.LikeService;
 import org.upgrad.services.NotificationService;
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 public class LikesFollowController {
 
     @Autowired
-    LikesService likesService;
+    LikeService likeService;
 
     @Autowired
     NotificationService notificationService;
@@ -48,14 +48,14 @@ public class LikesFollowController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
             User user = (User) session.getAttribute("currUser");
-            if (likesService.checkLikes(answerId, user.getId()) != null) {
+            if (likeService.getLikes(user.getId(), answerId) != null) {
                 return new ResponseEntity<>("You have already liked this answer!", HttpStatus.CONFLICT);
             } else {
-                likesService.giveLikes(answerId, user.getId());
+                likeService.giveLikes(answerId, user.getId());
                 //Adding a notification to the 'user' who created the 'answer'
                 notificationService.addnotification(answerService.findUserIdfromAnswer(answerId), "User with userId"
                         + user.getId() + " has liked your answer with answerId " + answerId);
-                return new ResponseEntity<>("answerId " + answerId + " liked successfully.", HttpStatus.OK);
+                return new ResponseEntity<>(" answerId " + answerId + " liked successfully.", HttpStatus.OK);
             }
         }
     }
@@ -67,14 +67,14 @@ public class LikesFollowController {
      */
     @DeleteMapping("/api/unlike/{answerId}")
     public ResponseEntity<?> unlike(@PathVariable("answerId") int answerId, HttpSession session) {
-        if (session.getAttribute("currUser") == null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            User user = (User) session.getAttribute("currUser");
-            if (likesService.checkLikes(answerId, user.getId()) == null) {
+            if (likeService.getLikes(user.getId(), answerId) == null) {
                 return new ResponseEntity<>("You have not liked this answer.", HttpStatus.CONFLICT);
             } else {
-                likesService.unlike(answerId, user.getId());
+                likeService.unlike(answerId, user.getId());
                 return new ResponseEntity<>("You have unliked answer with answerId " + answerId + " successfully.", HttpStatus.OK);
             }
         }
@@ -95,7 +95,7 @@ public class LikesFollowController {
                 return new ResponseEntity<>("You have already followed this category!", HttpStatus.CONFLICT);
             } else {
                 followService.addFollowCategory(categoryId, user.getId());
-                return new ResponseEntity<>("categoryId " + categoryId + " followed successfully.", HttpStatus.OK);
+                return new ResponseEntity<>(" categoryId " + categoryId + " followed successfully.", HttpStatus.OK);
             }
         }
     }

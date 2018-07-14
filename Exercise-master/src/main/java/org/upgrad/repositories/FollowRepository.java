@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.upgrad.models.Likes;
+import org.upgrad.models.Like;
 import javax.transaction.Transactional;
 
 /*
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  */
 
 @Repository
-public interface FollowRepository extends CrudRepository<Likes, Integer> {
+public interface FollowRepository extends CrudRepository<Like, Integer> {
 
     //Query to insert a new'follow'.
     @Transactional
@@ -31,6 +31,9 @@ public interface FollowRepository extends CrudRepository<Likes, Integer> {
     @Modifying
     @Query(nativeQuery = true,value="DELETE FROM follow where category_id=?1 and user_id=?2")
     void unFollow  (int category_id, int user_id);
+
+    @Query(nativeQuery = true,value="select user_id from follow where category_id=?1 and user_id=?2")
+    Integer findUserId (int category_id, int user_id);
 
 
 }
