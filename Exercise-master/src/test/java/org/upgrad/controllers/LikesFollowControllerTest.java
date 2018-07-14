@@ -200,24 +200,24 @@ public class LikesFollowControllerTest {
                 .andExpect(content().string(Matchers.containsString("You are currently not following this category")));
     }
 
-//    @Test
-//    public void removeFollowWithAuth() throws Exception{
-//        User user = new User();
-//        user.setUserName("upgrad");
-//        user.setRole("user");
-//        session = new MockHttpSession();
-//        session.setAttribute("currUser", user);
-//        String categoryId ="1";
-//        user.setId(3);
-//        Follow follow  =new Follow();
-//        follow.setId(1);
-//        follow.setUser_id(user.getId());
-//        Mockito.when(followService.findUserId(1,user.getId())).thenReturn(3);
-//        String url = "/api/unfollow/1";
-//        mvc.perform(delete(url).session(session)
-//                .param("categoryId",categoryId))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(content().string(Matchers.containsString(" You have unfollowed the category with categoryId " +categoryId+ " successfully.")));
-//    }
+    @Test
+    public void removeFollowWithAuth() throws Exception{
+        User user = new User();
+        user.setUserName("upgrad");
+        user.setRole("user");
+        session = new MockHttpSession();
+        session.setAttribute("currUser", user);
+        String categoryId ="1";
+        user.setId(3);
+        Follow follow  =new Follow();
+        follow.setId(1);
+        follow.setUser_id(user.getId());
+        Mockito.when(followService.findUserId(1,user.getId())).thenReturn(3);
+        String url = "/api/unfollow/1";
+        mvc.perform(delete(url).session(session)
+                .param("categoryId",categoryId))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(Matchers.containsString(" You have unfollowed the category with categoryId " +categoryId+ " successfully.")));
+    }
 
 }

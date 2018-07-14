@@ -63,7 +63,7 @@ public class LikesFollowController {
     /* Method to 'unlike' an 'answer'.
      * Input Param answerId is required.
      * User has to be logged in.
-     * User can only 'unlike' an that they have 'liked'.
+     * User can only 'unlike' answer that they have 'liked'.
      */
     @DeleteMapping("/api/unlike/{answerId}")
     public ResponseEntity<?> unlike(@PathVariable("answerId") int answerId, HttpSession session) {
@@ -71,7 +71,6 @@ public class LikesFollowController {
         if (user == null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
-            System.out.println("likes got "+likeService.getLikes(user.getId(), answerId));
             if (likeService.getLikes(user.getId(), answerId) == null) {
                 return new ResponseEntity<>("You have not liked this answer.", HttpStatus.CONFLICT);
             } else {
@@ -113,11 +112,11 @@ public class LikesFollowController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
             User user = (User) session.getAttribute("currUser");
-            if (followService.checkFollows(categoryId, user.getId())==null) {
+            if (followService.findUserId(categoryId, user.getId())==null) {
                 return new ResponseEntity<>("You are currently not following this category", HttpStatus.CONFLICT);
             } else {
                 followService.unFollow(categoryId, user.getId());
-                return new ResponseEntity<>("You have unfollowed the category with categoryId " + categoryId +
+                return new ResponseEntity<>(" You have unfollowed the category with categoryId " + categoryId +
                         " successfully.", HttpStatus.OK);
             }
 
