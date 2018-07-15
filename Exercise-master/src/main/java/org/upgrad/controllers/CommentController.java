@@ -34,7 +34,7 @@ public class CommentController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         } else {
             commentService.addComment(comment, user.getId(), answerId);
-            String message = "User with userId " + user.getId() + "has commented on your answer with answerId " + answerId;
+            String message = "User with userId " + user.getId() + " has commented on your answer with answerId " + answerId;
             notificationService.addnotification(user.getId(), message);
             return new ResponseEntity<>(" answerId " + answerId + " commented successfully.", HttpStatus.OK);
         }
