@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.upgrad.services.CategoryService;
 import org.upgrad.services.QuestionService;
 
+/*
+ * Author - Sundar
+ * Date - 11 July 2018
+ * Description - Rest API Controller for 'Likes' feature.
+ */
+
 @RestController
 public class CommonController {
 
