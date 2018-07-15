@@ -7,7 +7,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.upgrad.models.Notification;
 import java.util.List;
-
+/*
+    Author - Kanishka
+    Date - 7 July, 2018
+    Description - Repository that contains CRUD operations for Notification table
+ */
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification,Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM NOTIFICATION WHERE READ = 'f' AND user_id=?1")

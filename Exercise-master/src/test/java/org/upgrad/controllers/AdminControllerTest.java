@@ -115,22 +115,22 @@ public class AdminControllerTest {
                 .andExpect(content().string(containsString("You do not have rights to access all users!")));
     }
 
-//    @Test
-//    public void getAllUsersWithAuthorization() throws Exception{
-//        User user = new User();
-//        user.setUserName("upgrad");
-//        user.setRole("admin");
-//        List<User> allUsers= singletonList(user);
-//        session = new MockHttpSession();
-//        session.setAttribute("currUser", user);
-//        given(userService.getAllUsers()).willReturn(allUsers);
-//        String url = "/api/admin/users/all";
-//        mvc.perform(get(url).session(session)
-//                .contentType(MediaType.asMediaType(APPLICATION_JSON)))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(jsonPath("$[0].userName", Matchers.is(user.getUserName())));
-//    }
+    @Test
+    public void getAllUsersWithAuthorization() throws Exception{
+        User user = new User();
+        user.setUserName("upgrad");
+        user.setRole("admin");
+        List<User> allUsers= singletonList(user);
+        session = new MockHttpSession();
+        session.setAttribute("currUser", user);
+        given(userService.getAllUsers()).willReturn(allUsers);
+        String url = "/api/admin/users/all";
+        mvc.perform(get(url).session(session)
+                .contentType(MediaType.asMediaType(APPLICATION_JSON)))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].userName", Matchers.is(user.getUserName())));
+    }
 
     @Test
     public void deleteUserWithoutLogin() throws Exception{

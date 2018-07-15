@@ -5,7 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.Category;
 import org.upgrad.repositories.CategoryRepository;
-
+/*
+    Author - Kanishka
+    Date Created - 9 July, 2018
+    Description - Implementing services for 'category' service
+ */
 @Service
 public class CategoryServiceImp implements CategoryService {
     @Autowired

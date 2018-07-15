@@ -2,7 +2,11 @@ package org.upgrad.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+/*
+    Author - kanishka
+    Date - 9 July, 2018
+    Description - Persistence Class for Question table
+ */
 
 @Entity
 public class Category {

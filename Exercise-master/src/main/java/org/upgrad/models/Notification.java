@@ -9,7 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.Date;
-
+/*
+    Author - kanishka
+    Date - 7 July, 2018
+    Description - Persistence Class for Notification table
+ */
 
 @Entity
 public class Notification {
@@ -19,10 +23,21 @@ public class Notification {
     private String message;
     private LocalDateTime date;
     private Boolean read;
+    @Transient
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Boolean getRead() {
         return read;
     }
-    public void setRead(Boolean readStatus) {
+    public void setRead(Boolean read) {
         this.read = read;
     }
     public int getId() {
