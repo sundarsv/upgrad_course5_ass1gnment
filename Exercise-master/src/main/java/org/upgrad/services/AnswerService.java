@@ -9,7 +9,11 @@ import org.upgrad.repositories.QuestionRepository;
 
 import java.util.List;
 import java.util.Set;
-
+/*
+    Author - Sugandha
+    Date Created - 11 July, 2018
+    Description - Services for 'Answer' feature
+ */
 @Service
 public interface AnswerService {
     int addAnswer(String ans, int user_id ,int question_id) ;

@@ -6,7 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.upgrad.models.Category;
-
+/*
+    Author - Kanishka
+    Date - 9 July, 2018
+    Description - Repository that contains CRUD operations for Category table
+ */
 @Repository
 public interface CategoryRepository extends CrudRepository<Category,Integer> {
     @Transactional

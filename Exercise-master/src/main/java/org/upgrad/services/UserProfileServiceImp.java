@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.User_Profile;
 import org.upgrad.repositories.UserProfileRepository;
-
+/*
+    Author - Sugandha
+    Date Created - 2 July, 2018
+    Description - Implementing services for 'userProfile' service
+ */
 @Service
 public class UserProfileServiceImp implements UserProfileService{
 

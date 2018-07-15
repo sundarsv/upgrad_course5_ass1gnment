@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.upgrad.models.Comment;
 import org.upgrad.repositories.CommentRepository;
-
+/*
+    Author - Kanishka
+    Date Created - 13 July, 2018
+    Description - Implementing services for 'comment' service
+ */
 @Service
 public class CommentServiceImp implements CommentService {
     @Autowired

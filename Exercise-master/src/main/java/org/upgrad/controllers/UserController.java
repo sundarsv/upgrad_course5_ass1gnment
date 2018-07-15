@@ -139,7 +139,7 @@ public class UserController {
       once the user sees the notifiction the read attribute is set to true
      */
     @GetMapping("/api/user/notification/new")
-    public ResponseEntity<?> getNewNotifications(HttpSession session){
+    public ResponseEntity<?> getnewNotification(HttpSession session){
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {
@@ -154,7 +154,7 @@ public class UserController {
     once the user sees the notification the read attribute is set to true
      */
     @GetMapping("/api/user/notification/all")
-    public ResponseEntity<?> allNotification(HttpSession session){
+    public ResponseEntity<?> getallNotification(HttpSession session){
         if (session.getAttribute("currUser") == null)
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         else {

@@ -6,7 +6,11 @@ import org.upgrad.models.Answer;
 import org.upgrad.repositories.AnswerRepository;
 
 import java.util.List;
-
+/*
+    Author - Sugandha
+    Date Created - 11 July, 2018
+    Description - Implementing services for 'answer' service
+ */
 @Service
 public class AnswerServiceImp implements AnswerService{
 

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.services.CategoryService;
+import org.upgrad.services.NotificationService;
 import org.upgrad.services.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class AdminController {
+    @Autowired
+    private NotificationService notificationService;
     @Autowired
     private UserService userService;
 
@@ -33,6 +36,7 @@ public class AdminController {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         }
         else if (user.getRole().equals("admin")) {
+            notificationService.deleteNotification(userId);
             userService.deleteUserById(userId);
             return new ResponseEntity<>("User with userId " + userId + " deleted successfully!", HttpStatus.OK);
         }
