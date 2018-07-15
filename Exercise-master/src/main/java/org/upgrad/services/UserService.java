@@ -22,7 +22,7 @@ public interface UserService {
 
     public String findUserRole(String userName);
 
-    public int findId(String userName);
+    public int findUserId(String userName);
 
     public Boolean registerUserDetails(User user, User_Profile uf);
 

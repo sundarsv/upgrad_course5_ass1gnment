@@ -2,6 +2,7 @@ package org.upgrad.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.upgrad.models.Like;
 import org.upgrad.repositories.LikesRepository;
 
 /*
@@ -11,7 +12,7 @@ import org.upgrad.repositories.LikesRepository;
  */
 
 @Service
-public class LikesServiceImp implements LikesService {
+public class LikeServiceImp implements LikeService {
 
     @Autowired
     LikesRepository likesRepository;
@@ -22,7 +23,7 @@ public class LikesServiceImp implements LikesService {
     }
 
     @Override
-    public String checkLikes (int answerId, int user_id) {
+    public Like getLikes (int user_id,int answerId) {
         return likesRepository.checkLikes(answerId, user_id);
     }
 
@@ -34,5 +35,10 @@ public class LikesServiceImp implements LikesService {
     @Override
     public int getCount(int answerId) {
         return likesRepository.getCount(answerId);
+    }
+
+    @Override
+    public Integer getUserId(int answerId, int user_id) {
+        return likesRepository.getUserId(answerId, user_id);
     }
 }

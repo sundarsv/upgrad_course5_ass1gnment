@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.upgrad.models.User;
 import org.upgrad.services.AnswerService;
-import org.upgrad.services.LikesService;
+import org.upgrad.services.LikeService;
 import org.upgrad.services.NotificationService;
 import org.upgrad.services.QuestionService;
 import javax.servlet.http.HttpSession;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 @RestController
 public class AnswerController {
     @Autowired
-    private LikesService likesService;
+    private LikeService likeService;
 
     @Autowired
     private AnswerService answerService ;
@@ -82,10 +82,10 @@ public class AnswerController {
             User user = (User) session.getAttribute("currUser");
             int userId =  answerService.findUserIdfromAnswer(answerId)  ;
 
-            if ( session.getAttribute("currUserRole").equals("admin")  || user.getId() == userId   ) {
+            if ( user.getRole().equals("admin")  || user.getId() == userId   ) {
                 //Updating the new answer for that id.
                 answerService.editAnswerById(answer, answerId);
-                return new ResponseEntity<>("Answer with answerId" + answerId   +" edited successfully.", HttpStatus.OK);
+                return new ResponseEntity<>(" Answer with answerId " + answerId   +" edited successfully.", HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<>("You do not have rights to edit this answer.", HttpStatus.UNAUTHORIZED);
@@ -141,19 +141,19 @@ public class AnswerController {
     @DeleteMapping("/api/answer/{answerId}")
     public ResponseEntity<?> deleteAnswer(@PathVariable("answerId") int answerId, HttpSession session) {
 
-        if (session.getAttribute("currUser")==null) {
+        User user = (User) session.getAttribute("currUser");
+        if (user==null) {
             return new ResponseEntity<>("Please Login first to access this endpoint!", HttpStatus.UNAUTHORIZED);
         }
         else {
-            User user = (User) session.getAttribute("currUser");
             int userId =  answerService.findUserIdfromAnswer(answerId)  ;
 
-            if ( session.getAttribute("currUserRole").equals("admin")  || user.getId() == userId   ) {
+            if ( user.getRole().equals("admin")  || user.getId() == userId   ) {
                 answerService.deleteAnswerById(answerId);
-                return new ResponseEntity<>("Answer with answerId "+ answerId  +" deleted successfully.!", HttpStatus.OK);
+                return new ResponseEntity<>(" Answer with answerId "+ answerId  +" deleted successfully.!", HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>("You do not have rights to delete this answer!", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("You do not have rights to delete this answer.", HttpStatus.UNAUTHORIZED);
             }
         }
     }
@@ -165,7 +165,7 @@ public class AnswerController {
      * @return Response entity that list of all answers along-with no. of
      * likes for that particular question sorted by no of likes.
      */
-    @GetMapping("/api/answer/likes/{questionId}")
+    @GetMapping("/api/answer/all/likes/{questionId}")
     public ResponseEntity<?> getAllAnswersByLikes(@PathVariable("questionId") int questionId, HttpSession session) {
 
         if (session.getAttribute("currUser")==null) {
@@ -176,7 +176,7 @@ public class AnswerController {
             List<Integer> answers = answerService.getAllAnswerId(questionId);
             for ( int answerId :answers){
                 String answer = answerService.getAnswer(answerId);
-                int count = likesService.getCount(answerId);
+                int count = likeService.getCount(answerId);
                 DescendingOrder.put(answer,count);
             }
             Map sortedMap = new TreeMap(new ValueComparator(DescendingOrder));

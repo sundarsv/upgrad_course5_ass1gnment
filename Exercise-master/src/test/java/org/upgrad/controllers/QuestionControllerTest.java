@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.upgrad.models.Category;
 import org.upgrad.models.Question;
 import org.upgrad.models.User;
+import org.upgrad.services.FollowService;
 import org.upgrad.services.QuestionService;
 import org.upgrad.services.UserService;
 
@@ -41,8 +42,8 @@ public class QuestionControllerTest {
     @MockBean
     private UserService userService;
 
-//    @MockBean
-//    private FollowService followService;
+    @MockBean
+    private FollowService followService;
 
     @Test
     public void addQuestionWithNoAuthentication() throws Exception{

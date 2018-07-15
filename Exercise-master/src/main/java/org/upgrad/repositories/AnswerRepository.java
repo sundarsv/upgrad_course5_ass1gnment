@@ -25,10 +25,10 @@ public interface AnswerRepository extends CrudRepository<Answer,Integer> {
     int addAnswer( String ans, int user_id , int question_id );
 
     @Query(nativeQuery = true,value="select * from answer where question_id=?1")
-    Iterable<String> getAllAnswersByUserByQuestion(int question_id);
+    Iterable<Answer> getAllAnswersByUserByQuestion(int question_id);
 
     @Query(nativeQuery = true,value="select * from answer where user_id=?1")
-    Iterable<String> getAllAnswersByUser(int user_id);
+    Iterable<Answer> getAllAnswersByUser(int user_id);
 
     @Query(nativeQuery = true,value="select user_id from answer where id = ?1")
     int getUserId(int id);
