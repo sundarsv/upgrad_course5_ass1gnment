@@ -30,7 +30,7 @@ public class Answer {
     @Column(name = "question_id")
     private int question_id;
 
-    @Column(name = "modifiedOn")
+    @Column(name = "modifiedon")
     private LocalDateTime modifiedOn ;
 
     @Transient
