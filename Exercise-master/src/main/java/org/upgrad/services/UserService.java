@@ -28,7 +28,7 @@ public interface UserService {
 
     public void deleteUserById(int id);
 
-    public List<String> getAllUsers();
+    public List<User> getAllUsers();
 
     public User getUserByUsername(String userName);
 

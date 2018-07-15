@@ -10,6 +10,12 @@ import org.upgrad.services.UserService;
 
 import javax.servlet.http.HttpSession;
 
+/*
+ * Author - Sundar & Kanishk
+ * Date - 09 July 2018
+ * Description - Rest API Controller for 'Admin' feature.
+ */
+
 @RestController
 public class AdminController {
     @Autowired

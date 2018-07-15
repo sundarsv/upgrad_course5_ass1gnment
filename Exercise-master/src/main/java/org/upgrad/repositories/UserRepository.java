@@ -45,7 +45,7 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     void deleteUserById(int id);
 
     @Query(nativeQuery = true,value="SELECT id,email,username FROM USERS ")
-    List<String> findAllUsers();
+    List<User> findAllUsers();
 
     @Query(nativeQuery = true,value="select * from USERS where username=?1 ")
     //Iterable<User> getUserByUsername(String userName);
