@@ -28,6 +28,10 @@ public class NotificationServiceImp implements NotificationService {
     public void addnotification( int user_id , String message) {
         notificationRepository.addNotification(user_id, message) ;
     }
+    @Override
+    public void deleteNotification(int user_id) {
+        notificationRepository.deleteNotification(user_id);
+    }
 
 }
 
